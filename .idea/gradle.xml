@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleMigrationSettings" migrationVersion="1" />
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <compositeConfiguration>
+          <compositeBuild compositeDefinitionSource="SCRIPT">
+            <builds>
+              <build path="$PROJECT_DIR$/build-logic" name="build-logic">
+                <projects>
+                  <project path="$PROJECT_DIR$/build-logic" />
+                  <project path="$PROJECT_DIR$/build-logic/app" />
+                </projects>
+              </build>
+            </builds>
+          </compositeBuild>
+        </compositeConfiguration>
+        <option name="testRunner" value="CHOOSE_PER_TEST" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleJvm" value="#GRADLE_LOCAL_JAVA_HOME" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/Submodule" />
+            <option value="$PROJECT_DIR$/Submodule/AIDE" />
+            <option value="$PROJECT_DIR$/Submodule/AIDE/appAideBase" />
+            <option value="$PROJECT_DIR$/Submodule/AIDE/app_rewrite" />
+            <option value="$PROJECT_DIR$/Submodule/Termux" />
+            <option value="$PROJECT_DIR$/Submodule/Termux/app" />
+            <option value="$PROJECT_DIR$/Submodule/Termux/terminal-emulator" />
+            <option value="$PROJECT_DIR$/Submodule/Termux/terminal-view" />
+            <option value="$PROJECT_DIR$/Submodule/Termux/termux-shared" />
+            <option value="$PROJECT_DIR$/app_flavor" />
+            <option value="$PROJECT_DIR$/build-logic" />
+            <option value="$PROJECT_DIR$/build-logic/app" />
+          </set>
+        </option>
+        <option name="resolveExternalAnnotations" value="false" />
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>
