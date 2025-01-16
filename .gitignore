@@ -1,19 +1,22 @@
 *.iml
-.gradle
 /local.properties
-/.idea/caches
 /.idea/libraries
 /.idea/modules.xml
 /.idea/workspace.xml
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml
 .DS_Store
-/build
 /captures
 .externalNativeBuild
 .cxx
 local.properties
 
 # 项目排除路径
+/.gradle
+/.idea/caches
+/.idea/shelf
+/.kotlin
+/AIDELibrary
+/build
 /build-logic/build/
-/build-logic/build/app/classes/kotlin/main/
+/build-logic/.gradle

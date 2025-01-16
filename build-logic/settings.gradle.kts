@@ -15,6 +15,6 @@ dependencyResolutionManagement {
     }
 }
 
-include(":app")
+include(":core")
 rootProject.name = "build-logic"
 

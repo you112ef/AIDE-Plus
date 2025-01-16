@@ -26,6 +26,11 @@
             <option value="$PROJECT_DIR$/Submodule/AIDE" />
             <option value="$PROJECT_DIR$/Submodule/AIDE/appAideBase" />
             <option value="$PROJECT_DIR$/Submodule/AIDE/app_rewrite" />
+            <option value="$PROJECT_DIR$/Submodule/Compiletion" />
+            <option value="$PROJECT_DIR$/Submodule/Compiletion/Xml" />
+            <option value="$PROJECT_DIR$/Submodule/Compiletion/Xml/aaptcompiler" />
+            <option value="$PROJECT_DIR$/Submodule/Eclipse" />
+            <option value="$PROJECT_DIR$/Submodule/Eclipse/JavaFormatter" />
             <option value="$PROJECT_DIR$/Submodule/Termux" />
             <option value="$PROJECT_DIR$/Submodule/Termux/app" />
             <option value="$PROJECT_DIR$/Submodule/Termux/terminal-emulator" />

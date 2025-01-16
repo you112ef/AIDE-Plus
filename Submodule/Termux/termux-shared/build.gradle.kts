@@ -24,7 +24,7 @@ dependencies {
     val providerLibrary = project.layout.projectDirectory.asFile.resolve("base-api.jar")
     if (providerLibrary.exists()) {
         compileOnly(files(providerLibrary))
-        println("Termux 的 provider 库路径: $providerLibrary")
+        //println("Termux 的 provider 库路径: $providerLibrary")
     }
 
 }

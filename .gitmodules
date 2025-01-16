@@ -1,0 +1,6 @@
+[submodule "Submodule/AIDE/AIDE-Plus"]
+	path = Submodule/AIDE/AIDE-Plus
+	url = https://github.com/AndroidIDE-CN/AIDE-Plus
+[submodule "Submodule/Termux/AIDE-Termux"]
+	path = Submodule/Termux/AIDE-Termux
+	url = https://github.com/AndroidIDE-CN/AIDE-Termux

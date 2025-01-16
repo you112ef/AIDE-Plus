@@ -19,3 +19,14 @@ buildscript {
 
     }
 }
+
+
+tasks.register<Delete>("clean").configure {
+    delete(rootProject.layout.buildDirectory)
+    delete(rootDir.resolve("AIDELibrary"))
+    delete(rootDir.resolve("Submodule/AIDE/app_rewrite/res"))
+    delete(rootDir.resolve("Submodule/AIDE/app_rewrite/AndroidManifest.xml"))
+    delete(rootDir.resolve("Submodule/AIDE/appAideBase/res"))
+    delete(rootDir.resolve("Submodule/AIDE/appAideBase/AndroidManifest.xml"))
+
+}

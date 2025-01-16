@@ -1,8 +1,9 @@
 @file:Suppress("UnstableApiUsage")
+
+
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {
-    includeBuild("build-logic")
     repositories {
         google {
             content {
@@ -16,6 +17,7 @@ pluginManagement {
         gradlePluginPortal()
         mavenLocal()
         // maven("https://api.xposed.info/")//xposed仓库
+        maven("https://maven.aliyun.com/repository/public")
         maven("https://repo1.maven.org/maven2/")
         maven("https://s01.oss.sonatype.org/content/repositories/snapshots/")
         maven("https://oss.sonatype.org/content/repositories/snapshots")
@@ -40,6 +42,7 @@ dependencyResolutionManagement {
         mavenCentral()
         mavenLocal()
         // maven("https://api.xposed.info/")//xposed仓库
+        maven("https://maven.aliyun.com/repository/public")
         maven("https://repo1.maven.org/maven2")
         maven("https://dl.bintray.com/ppartisan/maven")
         maven("https://clojars.org/repo")
@@ -47,8 +50,12 @@ dependencyResolutionManagement {
         maven("https://s01.oss.sonatype.org/content/repositories/snapshots")
         maven("https://oss.sonatype.org/content/repositories/snapshots")
         maven("https://www.jetbrains.com/intellij-repository/releases")
+
     }
 }
+
+includeBuild("build-logic")
+
 
 rootProject.name = "AIDE-Plus"
 
@@ -60,6 +67,19 @@ include(
     ":Submodule:AIDE:appAideBase"
 )
 
+include(
+    ":Submodule:Compiletion:Xml:aaptcompiler"
+)
+
+include(
+    ":Submodule:Eclipse:JavaFormatter"
+)
+
+include(
+    ":Submodule:Kotlin:Compiler",
+    ":Submodule:Kotlin:Formatter",
+    ":Submodule:Kotlin:Core"
+)
 
 
 include(
