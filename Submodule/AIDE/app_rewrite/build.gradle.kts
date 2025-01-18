@@ -11,10 +11,31 @@ dependencies {
     api(project(":Submodule:Compiletion:Xml:aaptcompiler"))
     api(project(":Submodule:Eclipse:JavaFormatter"))
 
-    api(project(":Submodule:Kotlin:Compiler"))
-    api(project(":Submodule:Kotlin:Formatter"))
+    api(project(":Submodule:Kotlin:Compiler")){
+        isTransitive = false
+    }
+    api(project(":Submodule:Kotlin:Formatter")){
+        isTransitive = false
+    }
 
+    // 新增内容
     api(libs.io.github.itsaky.nb.javac.android)
+
+    //多语言工具
+    implementation(libs.io.github.getActivity.multiLanguages)
+    // okhttp
+    implementation(libs.io.github.squareup.okhttp3)
+    implementation(libs.io.github.squareup.okhttp3.logging.interceptor)
+    //工具库
+    implementation(libs.io.github.blankj.android.utilcodex)
+    // svg库
+    implementation(libs.com.github.megatronking.svg.support)
+    implementation(libs.com.romainpiel.svgtoandroid)
+    // brv比较强大的一个recycler的框架
+    implementation(libs.io.github.liangjingkanji.recyclerBRV)
+    // sora-editor代码编辑框
+    implementation(libs.io.github.rosemoe.sora.editor.editor)
+
 
 
     // appAideBase 项目的依赖

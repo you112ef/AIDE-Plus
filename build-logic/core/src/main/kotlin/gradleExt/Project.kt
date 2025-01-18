@@ -78,7 +78,6 @@ fun Project.configureBaseAppExtension() {
                     getDefaultProguardFile("proguard-android-optimize.txt"),
                     "proguard-rules.pro"
                 )
-                signingConfig = signingConfigs.getByName("debug1")
             }
             debug {
                 isMinifyEnabled = false
@@ -87,7 +86,6 @@ fun Project.configureBaseAppExtension() {
                     getDefaultProguardFile("proguard-android-optimize.txt"),
                     "proguard-rules.pro"
                 )
-                signingConfig = signingConfigs.getByName("debug1")
             }
         }
 

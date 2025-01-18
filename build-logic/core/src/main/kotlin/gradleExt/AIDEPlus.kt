@@ -1,6 +1,7 @@
 package gradleExt
 
 import java.io.File
+import java.util.zip.CRC32
 import java.util.zip.ZipEntry
 import java.util.zip.ZipFile
 import java.util.zip.ZipOutputStream
@@ -77,19 +78,29 @@ fun makeApk(
         aideLibraryDir.resolve("dexLibs/AIDE+_2.3.dex").inputStream().use { inputStream ->
             fileContents["classes$dexCount.dex"] = inputStream.readBytes()
             println("已添加 classes$dexCount.dex")
-
         }
 
         ZipOutputStream(outputStream()).use { outputZip ->
             fileContents.forEach { (name, data) ->
-                outputZip.putNextEntry(ZipEntry(name))
+                outputZip.putNextEntry(ZipEntry(name).apply {
+                    if (
+                        name == "resources.arsc" ||
+                        name.startsWith("lib/") && name.endsWith(".so") ||
+                        name.startsWith("classes") && name.endsWith(".dex") && name.indexOf('/') == -1
+                    ) {
+                        val crc32 = CRC32()
+                        crc32.update(data)
+                        method = ZipEntry.STORED // 设置为不压缩模式
+                        size = data.size.toLong() // 必须设置原始大小
+                        compressedSize = size // 压缩大小与原始大小一致
+                        crc = crc32.value // 必须设置 CRC 校验值
+                    }
+                })
                 outputZip.write(data)
                 outputZip.closeEntry()
             }
         }
-
         println("新文件输出路径为: $absolutePath")
-
     }
 
 

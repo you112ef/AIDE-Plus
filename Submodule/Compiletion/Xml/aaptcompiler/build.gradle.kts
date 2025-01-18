@@ -9,10 +9,9 @@ android {
 
 dependencies {
 
+    api(project(":Submodule:JDK:Jaxp-Xml"))
     // 太多错误了，直接引用jar包
-    api(files("libs/xml-completion-jaxp.jar"))
-
-    //api(projects.compiletion.jaxp)
+    //api(files("libs/xml-completion-jaxp.jar"))
 
     api(libs.androidx.collection.ktx)
 

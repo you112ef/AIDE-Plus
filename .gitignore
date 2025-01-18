@@ -10,6 +10,8 @@
 .externalNativeBuild
 .cxx
 local.properties
+ids-default.txt
+ids-termux.txt
 
 # 项目排除路径
 /.gradle

@@ -21,12 +21,20 @@ buildscript {
 }
 
 
+val moduleName = mutableListOf(
+    "Submodule/AIDE/app_rewrite",
+    "Submodule/AIDE/appAideBase",
+    "Submodule/Termux/app",
+    "Submodule/Termux/terminal-emulator",
+    "Submodule/Termux/terminal-view",
+    "Submodule/Termux/termux-shared"
+)
+
 tasks.register<Delete>("clean").configure {
     delete(rootProject.layout.buildDirectory)
     delete(rootDir.resolve("AIDELibrary"))
-    delete(rootDir.resolve("Submodule/AIDE/app_rewrite/res"))
-    delete(rootDir.resolve("Submodule/AIDE/app_rewrite/AndroidManifest.xml"))
-    delete(rootDir.resolve("Submodule/AIDE/appAideBase/res"))
-    delete(rootDir.resolve("Submodule/AIDE/appAideBase/AndroidManifest.xml"))
-
+    moduleName.forEach {
+        delete(rootDir.resolve(it).resolve("res"))
+        delete(rootDir.resolve(it).resolve("AndroidManifest.xml"))
+    }
 }

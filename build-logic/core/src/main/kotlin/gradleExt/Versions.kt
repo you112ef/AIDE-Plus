@@ -12,7 +12,7 @@ import java.io.File
 @SuppressWarnings("unused")
 object Versions {
     // Project versions
-    private const val version = "2.3.2.9"
+    private const val version = "2.3.3.3-alpha01"
     const val versionCode = 2008210017
 
     val versionName by lazy {
@@ -24,7 +24,7 @@ object Versions {
     const val compileSdk = 35
     const val ndkVersion = "27.2.12479018"
     const val minSdk = 26
-    const val targetSdk = 28
+    const val targetSdk = 34
 
     val JavaVersion = org.gradle.api.JavaVersion.VERSION_21
 

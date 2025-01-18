@@ -94,7 +94,7 @@ android {
 
                 val javaSrcDir = rootProjectDir.resolve("${currentProjectName}/src/main/java")
                 if (javaSrcDir.exists()) {
-                    java.setSrcDirs(listOf(javaSrcDir))
+                    java.setSrcDirs(listOf(javaSrcDir, rootDir.resolve("Rewrite/java")))
                 }
 
                 val resSrcDir = rootProjectDir.resolve("${currentProjectName}/src/main/res")
@@ -122,7 +122,7 @@ android {
                         currentProject.resolve("res/values-v21/colors_ui.xml")
                             .apply { if (exists()) delete() }
                     }
-                    res.setSrcDirs(listOf(newResDir))
+                    res.setSrcDirs(listOf(newResDir,rootDir.resolve("Rewrite/res")))
                 }
 
                 val jniLibsSrcDir = rootProjectDir.resolve("${currentProjectName}/src/main/jniLibs")
@@ -145,6 +145,12 @@ android {
             }
 
         }
+    }
+
+    buildFeatures{
+        viewBinding = true
+        //noinspection DataBindingWithoutKapt
+        dataBinding = true
     }
 
 }

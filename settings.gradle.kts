@@ -59,7 +59,10 @@ includeBuild("build-logic")
 
 rootProject.name = "AIDE-Plus"
 
-include(":app_flavor")
+include(
+    ":app_flavor:default",
+    ":app_flavor:termux"
+)
 
 
 include(
@@ -73,6 +76,12 @@ include(
 
 include(
     ":Submodule:Eclipse:JavaFormatter"
+)
+
+
+include(
+    ":Submodule:JDK:Jaxp-Xml",
+    ":Submodule:JDK:Jaxp-Kotlin"
 )
 
 include(

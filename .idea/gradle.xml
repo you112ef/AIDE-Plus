@@ -10,7 +10,7 @@
               <build path="$PROJECT_DIR$/build-logic" name="build-logic">
                 <projects>
                   <project path="$PROJECT_DIR$/build-logic" />
-                  <project path="$PROJECT_DIR$/build-logic/app" />
+                  <project path="$PROJECT_DIR$/build-logic/core" />
                 </projects>
               </build>
             </builds>
@@ -31,14 +31,23 @@
             <option value="$PROJECT_DIR$/Submodule/Compiletion/Xml/aaptcompiler" />
             <option value="$PROJECT_DIR$/Submodule/Eclipse" />
             <option value="$PROJECT_DIR$/Submodule/Eclipse/JavaFormatter" />
+            <option value="$PROJECT_DIR$/Submodule/JDK" />
+            <option value="$PROJECT_DIR$/Submodule/JDK/Jaxp-Kotlin" />
+            <option value="$PROJECT_DIR$/Submodule/JDK/Jaxp-Xml" />
+            <option value="$PROJECT_DIR$/Submodule/Kotlin" />
+            <option value="$PROJECT_DIR$/Submodule/Kotlin/Compiler" />
+            <option value="$PROJECT_DIR$/Submodule/Kotlin/Core" />
+            <option value="$PROJECT_DIR$/Submodule/Kotlin/Formatter" />
             <option value="$PROJECT_DIR$/Submodule/Termux" />
             <option value="$PROJECT_DIR$/Submodule/Termux/app" />
             <option value="$PROJECT_DIR$/Submodule/Termux/terminal-emulator" />
             <option value="$PROJECT_DIR$/Submodule/Termux/terminal-view" />
             <option value="$PROJECT_DIR$/Submodule/Termux/termux-shared" />
             <option value="$PROJECT_DIR$/app_flavor" />
+            <option value="$PROJECT_DIR$/app_flavor/default" />
+            <option value="$PROJECT_DIR$/app_flavor/termux" />
             <option value="$PROJECT_DIR$/build-logic" />
-            <option value="$PROJECT_DIR$/build-logic/app" />
+            <option value="$PROJECT_DIR$/build-logic/core" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />
