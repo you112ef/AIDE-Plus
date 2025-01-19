@@ -11,12 +11,18 @@ import java.io.File
 
 @SuppressWarnings("unused")
 object Versions {
-    // Project versions
-    private const val version = "2.3.3.3-alpha01"
-    const val versionCode = 2008210017
+    private val versionPattern = """versionName\s*"([^"]+)"""".toRegex()
+    private val versionCodePattern = """versionCode\s*(\d+)""".toRegex()
 
-    val versionName by lazy {
-        "$version-${getCommitHash()}"
+
+    val version: (File) -> String = {
+        versionPattern.find(it.readText())?.groupValues?.get(1) ?: "2.3.3.3-alpha05"
+    }
+    val versionCode: (File) -> String = {
+        versionCodePattern.find(it.readText())?.groupValues?.get(1) ?: "2008210017"
+    }
+    val versionName: (File) -> String = {
+        "${version(it)}-${getCommitHash()}"
     }
 
 

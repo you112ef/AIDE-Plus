@@ -44,10 +44,15 @@ fun Project.configureBaseAppExtension() {
         ndkVersion = Versions.ndkVersion
 
         defaultConfig{
+            val appFlavor = rootDir.resolve("Submodule/AIDE/AIDE-Plus/app_flavor/build.gradle")
+            val versionTxt = rootDir.resolve("version.txt")
+            versionTxt.writeText(Versions.version(appFlavor))
+
+
             minSdk = Versions.minSdk
             targetSdk = Versions.targetSdk
-            versionCode = Versions.versionCode
-            versionName = Versions.versionName
+            versionCode = Versions.versionCode(appFlavor).toInt()
+            versionName = Versions.versionName(appFlavor)
         }
 
         signingConfigs {
@@ -147,8 +152,6 @@ fun Project.configureBaseExtension() {
         defaultConfig {
             minSdk = Versions.minSdk
             targetSdk = Versions.targetSdk
-            versionCode = Versions.versionCode
-            versionName = Versions.versionName
         }
 
         compileOptions {

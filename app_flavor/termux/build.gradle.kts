@@ -112,6 +112,11 @@ android {
     }
 
     android.applicationVariants.all {
+        val sdkDirectory = android.sdkDirectory
+        val buildToolsVersion = android.buildToolsVersion
+        zipalignPath =
+            "$sdkDirectory/build-tools/$buildToolsVersion/zipalign${if (isWindows) ".exe" else ""}"
+
         outputs.all {
             allVariants[name.replace("-", "")] = outputFile
         }
@@ -131,6 +136,7 @@ dependencies {
     api(project(":Submodule:AIDE:app_rewrite"))
     api(project(":Submodule:AIDE:appAideBase"))
 
+    api(project(":Submodule:Resource"))
 
     // androidx&material和其他杂七杂八的框架
     api(libs.bundles.google.androidx)
@@ -155,8 +161,8 @@ afterEvaluate {
     tasks.register("makeApk") {
         doLast {
             allVariants.forEach { (_, apkFile) ->
-                println("APK 文件路径: ${apkFile.absolutePath}")
                 if (apkFile.exists()) {
+                    println("APK 文件路径: ${apkFile.absolutePath}")
                     makeApk(
                         aideLibraryDir = rootDir.resolve("AIDELibrary"),
                         zipalignFile = File(zipalignPath),

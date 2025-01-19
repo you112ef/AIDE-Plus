@@ -11,7 +11,7 @@ android {
     sourceSets{
         val main by getting
         main.apply {
-            res.setSrcDirs(listOf(currentProject.resolve("res")))
+            //res.setSrcDirs(listOf(currentProject.resolve("res")))
             manifest.srcFile(currentProject.resolve("AndroidManifest.xml"))
         }
     }
