@@ -20,6 +20,8 @@ import com.probelytics.Probelytics;
 import com.probelytics.annotation.ExceptionEnabled;
 import com.probelytics.annotation.MethodMark;
 import com.probelytics.annotation.ParametersEnabled;
+
+import io.github.zeroaicy.aide.activity.XmlEditorActivity;
 import io.github.zeroaicy.util.ContextUtil;
 
 public class x9 implements rf, KeyStrokeCommand, MenuCommand {
@@ -209,7 +211,7 @@ public class x9 implements rf, KeyStrokeCommand, MenuCommand {
         if (visibleFile == null || (isProjectDirectory = isProjectDirectory(visibleFile)) == null) {
             return false;
         }
-        if (visibleFile.endsWith("/AndroidManifest.xml")){
+        if (visibleFile.endsWith(".xml")){
             return true;
         }
         if (!ServiceContainer.isTrainerMode() || ServiceContainer.getTrainerService().CU(visibleFile)) {
@@ -225,9 +227,9 @@ public class x9 implements rf, KeyStrokeCommand, MenuCommand {
         if (visibleFile == null || (isProjectDirectory = isProjectDirectory(visibleFile)) == null) {
             return false;
         }
-        if (visibleFile.endsWith("/AndroidManifest.xml")){
+        if (visibleFile.endsWith(".xml")){
             Context context = ContextUtil.getContext();
-            Intent intent = new Intent(context, ManifestEditorActivity.class);
+            Intent intent = new Intent(context, XmlEditorActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra("path", visibleFile);
             context.startActivity(intent);

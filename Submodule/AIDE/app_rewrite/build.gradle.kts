@@ -5,6 +5,16 @@ plugins {
 }
 
 
+android{
+
+    buildFeatures{
+        viewBinding = true
+        //noinspection DataBindingWithoutKapt
+        dataBinding = true
+    }
+}
+
+
 dependencies {
     api(project(":Submodule:AIDE:appAideBase"))
 

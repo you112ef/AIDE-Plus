@@ -1,7 +1,6 @@
 @file:Suppress("DEPRECATION")
 
 import gradleExt.makeApk
-import org.gradle.internal.impldep.org.junit.experimental.categories.Categories.CategoryFilter.exclude
 import org.jetbrains.kotlin.cli.common.CompilerSystemProperties
 
 plugins {
@@ -17,6 +16,7 @@ val allVariants = mutableMapOf<String, File>()
 var zipalignPath = ""
 
 
+
 android {
     namespace = "io.github.zeroaicy.aide2"
 
@@ -27,6 +27,8 @@ android {
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
     }
+
+
     sourceSets {
         val main by getting
         val aideLibraryDir = project.rootDir.resolve("AIDELibrary")
@@ -43,6 +45,7 @@ android {
         }
 
     }
+
     packaging {
         resources {
             pickFirsts += "*/*/*/*/*/*/*/*/*/*/*/*/*/*/*"
@@ -68,22 +71,26 @@ android {
         }
     }
 
-
-
     androidResources {
+
         val publicXmlFile =
             project.rootProject.file("${project(":Submodule:AIDE:appAideBase").projectDir.path}/res/values/public.xml")
         println(publicXmlFile.absolutePath)
-        val publicTxtFile = rootDir.resolve("ids-termux.txt")
+        val publicTxtFile = rootDir.resolve("ids-default.txt")
+
         if (publicXmlFile.exists()) {
+            // 创建父目录并确保 publicTxtFile 存在
             publicTxtFile.parentFile?.mkdirs()
             publicTxtFile.delete()
             publicTxtFile.createNewFile()
+
+            // 解析 public.xml 文件并将内容写入 public.txt
             val nodes = javax.xml.parsers.DocumentBuilderFactory.newInstance()
                 .newDocumentBuilder()
                 .parse(publicXmlFile)
                 .documentElement
                 .getElementsByTagName("public")
+
             for (i in 0 until nodes.length) {
                 val node = nodes.item(i)
                 val type = node.attributes.getNamedItem("type").nodeValue
@@ -91,6 +98,8 @@ android {
                 val id = node.attributes.getNamedItem("id").nodeValue
                 publicTxtFile.appendText("${android.defaultConfig.applicationId}:$type/$name = $id\n")
             }
+
+            // 添加稳定 ID 参数
             additionalParameters.addAll(mutableListOf("--stable-ids", publicTxtFile.path))
         }else{
             println("public.xml不存在")
@@ -102,39 +111,10 @@ android {
         checkReleaseBuilds = false
     }
 
-
-
-    applicationVariants.all {
-        val sdkDirectory = android.sdkDirectory
-        val buildToolsVersion = android.buildToolsVersion
-        zipalignPath =
-            "$sdkDirectory/build-tools/$buildToolsVersion/zipalign${if (isWindows) ".exe" else ""}"
-
+    android.applicationVariants.all {
         outputs.all {
             allVariants[name.replace("-", "")] = outputFile
         }
-    }
-
-}
-
-configurations.all {
-//    exclude("org.jetbrains","annotations")
-//    exclude("com.google.guava","guava")
-//    exclude("com.google.guava","listenablefuture")
-//    exclude("org.jetbrains.kotlin","kotlin-compiler-embeddable")
-//    exclude("net.java.dev.jna", "jna")
-//    exclude("net.java.dev.jna", "jna-platform")
-//    exclude("javax.inject","javax.inject")
-    //exclude("org.jetbrains.kotlin","kotlin-reflect")
-    //exclude("org.jetbrains.intellij.deps","trove4j")
-    //exclude("org.jetbrains.kotlinx","kotlinx-coroutines-core-jvm")
-    //exclude("org.jetbrains.kotlin","kotlin-stdlib-jdk8")
-    //exclude("org.jetbrains.kotlin","kotlin-script-runtime")
-    //exclude("io.github.itsaky","nb-javac-android")
-    resolutionStrategy {
-        // 对冲突的依赖直接使用最新版本
-        //force("")
-        //failOnVersionConflict()
     }
 }
 
@@ -168,6 +148,8 @@ dependencies {
 
 
 }
+
+
 
 afterEvaluate {
     tasks.register("makeApk") {

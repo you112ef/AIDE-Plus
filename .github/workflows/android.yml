@@ -1,0 +1,59 @@
+name: Build & Publish Release APK
+
+on:
+  push:
+    tags:
+      - v*
+  pull_request:
+    # 分支名称
+    branches: [ "master" ]
+  workflow_dispatch: { }
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      # 矩阵功能，为每个包构建
+      matrix:
+        flavor: [ default, termux ]
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: set up JDK 21
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+        cache: gradle
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+
+    - name: Build APK for ${{ matrix.flavor }}
+      run: ./gradlew app_flavor:${{ matrix.flavor }}:assembleRelease
+
+    - name: Get TAG_VERSION_NAME from build.gradle.kts
+      id: get_version_info
+      run: |
+        TAG_VERSION_NAME=$(grep "val TAG_VERSION_NAME =" build.gradle.kts | awk '{print $4}' | tr -d '"')
+        echo "TAG_VERSION_NAME=${TAG_VERSION_NAME}" >> $GITHUB_ENV
+
+      # 重命名
+    - name: Rename APK for ${{ matrix.flavor }}
+      run: mv build/app_flavor-${{ matrix.flavor }}/outputs/apk/${{ matrix.flavor }}/release/app-${{ matrix.flavor }}-release.apk build/app/outputs/apk/${{ matrix.flavor }}/release/AIDE-${{ matrix.flavor }}.apk
+
+    - name: Upload  APK
+      uses: actions/upload-artifact@v4
+      with:
+        name: AIDE-${{ matrix.flavor }}.apk
+        path: build/app/outputs/apk/${{ matrix.flavor }}/release/AIDE-${{ matrix.flavor }}.apk
+    # 发布到 Release
+    - name: Upload APK for ${{ matrix.flavor }} to GitHub Release
+      uses: softprops/action-gh-release@v2
+      with:
+        body_path: changlog/${{ env.TAG_VERSION_NAME }}/README.md
+        tag_name: ${{ env.TAG_VERSION_NAME }}
+        repository: neu233/AIDE-Plus-AS
+        files: build/app/outputs/apk/${{ matrix.flavor }}/release/AIDE-${{ matrix.flavor }}.apk
+        token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}

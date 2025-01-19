@@ -3,6 +3,7 @@ package io.github.zeroaicy.aide.activity
 import android.os.Bundle
 import com.aide.ui.rewrite.databinding.ActivityXmlEditorBinding
 import io.github.zeroaicy.aide.base.BaseAppActivity
+import io.github.zeroaicy.util.Log
 
 
 /**
@@ -17,7 +18,15 @@ class XmlEditorActivity : BaseAppActivity<ActivityXmlEditorBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //_binding.toolbar.setNavigationOnClickListener { finish() }
+        if (intent != null && intent.hasExtra("path")) {
+            val path: String? = intent.getStringExtra("path")
+            Log.d("XmlEditorActivity", "Path: $path")
+        } else {
+            Log.e("XmlEditorActivity", "No path received in Intent!");
+        }
+
+
+
 
     }
 }

@@ -16,6 +16,7 @@ val allVariants = mutableMapOf<String, File>()
 var zipalignPath = ""
 
 
+
 android {
     namespace = "io.github.zeroaicy.aide"
 
@@ -26,6 +27,8 @@ android {
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
     }
+
+
     sourceSets {
         val main by getting
         val aideLibraryDir = project.rootDir.resolve("AIDELibrary")
@@ -42,6 +45,7 @@ android {
         }
 
     }
+
     packaging {
         resources {
             pickFirsts += "*/*/*/*/*/*/*/*/*/*/*/*/*/*/*"
@@ -66,7 +70,6 @@ android {
             pickFirsts += "/lib/*/*"
         }
     }
-
 
     androidResources {
 
@@ -108,15 +111,7 @@ android {
         checkReleaseBuilds = false
     }
 
-
-
-    applicationVariants.all {
-        val sdkDirectory = android.sdkDirectory
-        val buildToolsVersion = android.buildToolsVersion
-        zipalignPath =
-            "$sdkDirectory/build-tools/$buildToolsVersion/zipalign${if (isWindows) ".exe" else ""}"
-
-
+    android.applicationVariants.all {
         outputs.all {
             allVariants[name.replace("-", "")] = outputFile
         }
@@ -124,26 +119,6 @@ android {
 
 }
 
-configurations.all {
-    exclude("org.jetbrains","annotations")
-    exclude("com.google.guava","guava")
-    exclude("com.google.guava","listenablefuture")
-    exclude("org.jetbrains.kotlin","kotlin-compiler-embeddable")
-    exclude("net.java.dev.jna", "jna")
-    exclude("net.java.dev.jna", "jna-platform")
-    exclude("javax.inject","javax.inject")
-    //exclude("org.jetbrains.kotlin","kotlin-reflect")
-    //exclude("org.jetbrains.intellij.deps","trove4j")
-    //exclude("org.jetbrains.kotlinx","kotlinx-coroutines-core-jvm")
-    //exclude("org.jetbrains.kotlin","kotlin-stdlib-jdk8")
-    //exclude("org.jetbrains.kotlin","kotlin-script-runtime")
-    //exclude("io.github.itsaky","nb-javac-android")
-    resolutionStrategy {
-        // 对冲突的依赖直接使用最新版本
-        //force("")
-        //failOnVersionConflict()
-    }
-}
 
 
 
@@ -169,6 +144,7 @@ dependencies {
 
 
 }
+
 
 afterEvaluate {
     tasks.register("makeApk") {

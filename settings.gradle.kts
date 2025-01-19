@@ -59,38 +59,51 @@ includeBuild("build-logic")
 
 rootProject.name = "AIDE-Plus"
 
+
+// 多渠道
 include(
     ":app_flavor:default",
     ":app_flavor:termux"
 )
 
+include(
+    ":Submodule:TestProject:XmlPackge"
+)
 
+// 底包
 include(
     ":Submodule:AIDE:app_rewrite",
     ":Submodule:AIDE:appAideBase"
 )
+include(
+    ":Submodule:Resource"
+)
 
+// xml
 include(
     ":Submodule:Compiletion:Xml:aaptcompiler"
 )
 
+// ecj
 include(
     ":Submodule:Eclipse:JavaFormatter"
 )
 
 
+// jaxp
 include(
     ":Submodule:JDK:Jaxp-Xml",
     ":Submodule:JDK:Jaxp-Kotlin"
 )
 
+// kotlin
 include(
     ":Submodule:Kotlin:Compiler",
     ":Submodule:Kotlin:Formatter",
     ":Submodule:Kotlin:Core"
 )
 
-
+// termux
 include(
     ":Submodule:Termux:terminal-emulator",
     ":Submodule:Termux:terminal-view",

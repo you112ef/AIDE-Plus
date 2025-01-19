@@ -101,7 +101,8 @@ fun Project.configureBaseAppExtension() {
         }
 
         lint {
-            baseline = file("lint-baseline.xml")
+            val baselineFile = project.layout.projectDirectory.asFile.resolve("lint-baseline.xml")
+            baseline = baselineFile
             abortOnError = false
             checkReleaseBuilds = false
         }
@@ -156,7 +157,8 @@ fun Project.configureBaseExtension() {
         }
 
         lintOptions {
-            baseline(file("lint-baseline.xml"))
+            val baseline = project.layout.projectDirectory.asFile.resolve("lint-baseline.xml")
+            baseline(baseline)
             isAbortOnError = false
             isCheckReleaseBuilds = false
         }
