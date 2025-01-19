@@ -1,5 +1,6 @@
 @file:Suppress("DEPRECATION")
 
+import gradleExt.Versions
 import gradleExt.makeApk
 import org.jetbrains.kotlin.cli.common.CompilerSystemProperties
 
@@ -157,16 +158,19 @@ dependencies {
 
 
 
+
 afterEvaluate {
     tasks.register("makeApk") {
         doLast {
             allVariants.forEach { (_, apkFile) ->
                 if (apkFile.exists()) {
                     println("APK 文件路径: ${apkFile.absolutePath}")
+                    val appFlavor = rootDir.resolve("Submodule/AIDE/AIDE-Plus/app_flavor/build.gradle")
                     makeApk(
                         aideLibraryDir = rootDir.resolve("AIDELibrary"),
                         zipalignFile = File(zipalignPath),
                         apkFile = apkFile,
+                        apkOutputFile = File(apkFile.parentFile, "AIDE-Plus-${Versions.versionName(appFlavor)}.apk"),
                         storeFile = file("../debug.jks"),
                         storePassword = "123789456",
                         keyAlias = "androiddebug",
@@ -188,7 +192,6 @@ afterEvaluate {
         }
     }
 }
-
 
 val isWindows: Boolean
     get() = CompilerSystemProperties.OS_NAME.value!!.lowercase().startsWith("windows")

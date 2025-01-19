@@ -19,6 +19,7 @@ fun makeApk(
     aideLibraryDir: File,
     zipalignFile: File,
     apkFile: File,
+    apkOutputFile: File,
     storeFile: File,
     storePassword: String,
     keyAlias: String,
@@ -123,7 +124,7 @@ fun makeApk(
 
     apkSign(
         minSdkVersion = Versions.minSdk,
-        outputApk = apkFile,
+        outputApk = apkOutputFile,
         inputApk = unSignedApkFile,
         storeFile,
         storePassword,
