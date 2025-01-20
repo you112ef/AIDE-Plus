@@ -32,7 +32,7 @@ val nameLibrary = mutableListOf(
  * 用于排除指定的jar包
  * */
 val excludeLibrary = mutableListOf<String>(
-    "desugar-lib.jar",
+    //"desugar-lib.jar",
     "java-formatter.jar",
     "javax-tools-22.jar"
 //    "dependencies_desugar.jar",

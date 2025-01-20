@@ -71,12 +71,13 @@ fun makeApk(
                         }
                     }.dex"
                     fileContents[fileName] = it.readBytes()
-                    println("已添加 $fileName")
+                    println("已添加 ${it.name} to $fileName")
                 }
             }
         }
 
         aideLibraryDir.resolve("dexLibs/AIDE+_2.3.dex").inputStream().use { inputStream ->
+            dexCount++
             fileContents["classes$dexCount.dex"] = inputStream.readBytes()
             println("已添加 classes$dexCount.dex")
         }
@@ -134,6 +135,14 @@ fun makeApk(
         enableV2Signing,
         enableV3Signing
     )
+
+    apkOutputFile.inputStream().use { input ->
+        apkFile.outputStream().use {  output->
+            input.copyTo(output)
+        }
+    }
+
+
 
 
 }
