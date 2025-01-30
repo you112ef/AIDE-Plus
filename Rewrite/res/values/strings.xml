@@ -1,0 +1,27 @@
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+
+    <string name="designer_ui_open_start">Project</string>
+    <string name="designer_ui_open_end">Resource</string>
+
+    <string name="designer_ui_visibility_is_show_appbar" >Show AppBar?</string>
+    <string name="designer_ui_visibility_is_show_system_ui">Show System UI?</string>
+    <string name="designer_ui_mode_display_hint">Design Plan</string>
+    <string name="designer_ui_mode_display_blueprint">Display Blueprint</string>
+    <string name="designer_ui_mode_display_design">Display Design</string>
+    <string name="designer_ui_mode_display_view">Display View</string>
+    <string name="designer_ui_mode_read_only">Read-only Mode</string>
+
+
+    <string-array name="designer_ui_mode_all" translatable="false">
+        <item>@string/designer_ui_mode_display_blueprint</item>
+        <item>@string/designer_ui_mode_display_design</item>
+        <item>@string/designer_ui_mode_display_view</item>
+    </string-array>
+
+
+
+
+    <string name="designer_ui_system_theme">System Theme</string>
+    <string name="designer_ui_app_theme">Application Theme</string>
+
+</resources>

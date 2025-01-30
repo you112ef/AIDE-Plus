@@ -1,0 +1,18 @@
+<resources>
+
+    <string name="designer_ui_open_start">项目</string>
+    <string name="designer_ui_open_end">资源</string>
+
+    <string name="designer_ui_visibility_is_show_appbar">是否显示标题栏？</string>
+    <string name="designer_ui_visibility_is_show_system_ui">是否显示系统UI？</string>
+    <string name="designer_ui_mode_display_hint">预览方案</string>
+    <string name="designer_ui_mode_display_blueprint">蓝图模式</string>
+    <string name="designer_ui_mode_display_design">设计模式</string>
+    <string name="designer_ui_mode_display_view">视图模式</string>
+    <string name="designer_ui_mode_read_only">只读模式</string>
+
+    <string name="designer_ui_system_theme">系统主题</string>
+    <string name="designer_ui_app_theme">应用主题</string>
+
+
+</resources>

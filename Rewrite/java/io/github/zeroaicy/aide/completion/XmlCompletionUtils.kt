@@ -1,9 +1,11 @@
 package io.github.zeroaicy.aide.completion
 
 import android.content.Context
+import com.aide.codemodel.api.ClassType
 import com.aide.codemodel.api.Model
 import com.aide.codemodel.api.Namespace
 import com.aide.codemodel.api.SyntaxTree
+import com.aide.codemodel.api.collections.MapOfInt
 import com.aide.common.AppLog
 import com.aide.ui.util.FileSystem
 import com.android.SdkConstants
@@ -151,7 +153,6 @@ import io.github.zeroaicy.aide.aaptcompiler.WidgetTableUtils
 import io.github.zeroaicy.aide.aaptcompiler.interfaces.widgets.Widget
 import io.github.zeroaicy.aide.aaptcompiler.interfaces.widgets.WidgetTable
 import io.github.zeroaicy.aide.aaptcompiler.permissions.Permission
-import io.github.zeroaicy.aide.aaptcompiler.utils.StyleUtils
 import io.github.zeroaicy.aide.aaptcompiler.utils.attrValue_qualifiedRef
 import io.github.zeroaicy.aide.aaptcompiler.utils.attrValue_qualifiedRefWithIncompletePckOrType
 import io.github.zeroaicy.aide.aaptcompiler.utils.attrValue_qualifiedRefWithIncompleteType
@@ -218,18 +219,18 @@ fun completionXmlTag(
             val androidNamespace = rootNamespace.getMemberNamespace(androidIdentifierId)
             val javaViewClasses = javaViewUtils.javaViewClasses
             AppLog.d(TAG, "javaViewClasses size %s ", javaViewClasses.size)
-            javaViewClasses.forEach { s ->
-                val className = StyleUtils.getSimpleName(s)
+            javaViewClasses.forEach { javaViewClassName ->
+                var className = getSimpleName(javaViewClassName)
                 val classNameIdentifierId = identifierSpace[className]
                 val type = when {
-                    s.startsWith(WIDGET_PKG_PREFIX) -> {
+                    javaViewClassName.startsWith(WIDGET_PKG_PREFIX) -> {
                         val widgetIdentifierId = identifierSpace["widget"]
                         val androidWidgetNamespace =
                             androidNamespace.getMemberNamespace(widgetIdentifierId)
                         androidWidgetNamespace.allMemberClassTypes[classNameIdentifierId]
                     }
 
-                    s.startsWith(VIEW_PKG_PREFIX) -> {
+                    javaViewClassName.startsWith(VIEW_PKG_PREFIX) -> {
                         val viewIdentifierId = identifierSpace["view"]
                         val androidViewNamespace =
                             androidNamespace.getMemberNamespace(viewIdentifierId)
@@ -237,22 +238,31 @@ fun completionXmlTag(
                     }
 
                     else -> {
-                        val classNamespace = getClassNamespace(s, model)
-                        val allMemberClassTypes = classNamespace.allMemberClassTypes
-                        allMemberClassTypes[classNameIdentifierId].also { resolvedType ->
-                            if (resolvedType == null) {
-                                AppLog.d(
-                                    TAG,
-                                    "classNamespace ${classNamespace.fullyQualifiedNameString}"
-                                )
-                                AppLog.d(TAG, "ClassType $s")
-                                AppLog.d(
-                                    TAG,
-                                    "allMemberClassTypes size ${allMemberClassTypes.size()}"
-                                )
-                                AppLog.println_d()
-                            }
+
+
+                        //  计算 javaViewClassName 的 包名(Namespace)
+                        val classNamespace = getClassNamespace(javaViewClassName, model)
+                        val allMemberClassTypes: MapOfInt<ClassType> =
+                            classNamespace.allMemberClassTypes
+                        // 查找 类
+                        val type = allMemberClassTypes[classNameIdentifierId]
+                        // 非 WIDGET_PKG_PREFIX || VIEW_PKG_PREFIX 使用 全名
+                        className = javaViewClassName
+                        if (type == null) {
+                            AppLog.d(
+                                TAG,
+                                "classNamespace %s ",
+                                classNamespace.fullyQualifiedNameString
+                            )
+                            AppLog.d(TAG, "ClassType %s ", javaViewClassName)
+                            AppLog.d(
+                                TAG,
+                                "allMemberClassTypes size %s ",
+                                allMemberClassTypes.size()
+                            )
+                            AppLog.println_d()
                         }
+                        type
                     }
                 }
 
@@ -479,13 +489,10 @@ fun completionXmlValue(
         matcher = attrValue_qualifiedRefWithIncompletePckOrType.matcher(prefix)
         if (matcher.matches()) {
             val valPck = matcher.group(1)!!
-
             if (!valPck.contains('.')) {
                 model.addResourceTypes("", valPck)
             }
-
             model.addPackages(valPck)
-
             return
         }
 
@@ -503,6 +510,10 @@ fun completionXmlValue(
 
 }
 
+
+fun getSimpleName(name: String?): String {
+    return name?.substringAfterLast('.', name) ?: ""
+}
 
 /**
  * 补全清单文件的tag
@@ -1382,3 +1393,4 @@ val DIMENSION_UNITS = mutableListOf(
     UNIT_MM,
     UNIT_PT
 )
+

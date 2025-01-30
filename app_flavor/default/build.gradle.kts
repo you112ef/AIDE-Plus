@@ -74,9 +74,9 @@ android {
 
     androidResources {
 
+
         val publicXmlFile =
-            project.rootProject.file("${project(":Submodule:AIDE:appAideBase").projectDir.path}/res/values/public.xml")
-        println(publicXmlFile.absolutePath)
+            rootDir.resolve("Submodule/AIDE/AIDE-Plus/appAideBase/src/main/res/values/public.xml")
         val publicTxtFile = rootDir.resolve("ids-default.txt")
 
         if (publicXmlFile.exists()) {

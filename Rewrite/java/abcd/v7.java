@@ -166,7 +166,9 @@ public class v7 {
             }
         }
         // 置空 appResourceTable
-        resourceUtil.removeTable("app");
+        if (resourceUtil != null) {
+            resourceUtil.removeTable("app");
+        }
 
         ResourceTable appResourceTable = resourceUtil.forPackage("app", resDirs.toArray(new File[0]));
 

@@ -30,7 +30,7 @@ dependencies {
         exclude(group = "com.google.guava", module = "listenablefuture")
     }
 
-    api(libs.org.apache.bcel)
+    //api(libs.org.apache.bcel)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

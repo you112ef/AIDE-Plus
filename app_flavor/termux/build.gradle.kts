@@ -75,8 +75,7 @@ android {
     androidResources {
 
         val publicXmlFile =
-            project.rootProject.file("${project(":Submodule:AIDE:appAideBase").projectDir.path}/res/values/public.xml")
-        println(publicXmlFile.absolutePath)
+            rootDir.resolve("Submodule/AIDE/AIDE-Plus/appAideBase/src/main/res/values/public.xml")
         val publicTxtFile = rootDir.resolve("ids-default.txt")
 
         if (publicXmlFile.exists()) {
@@ -102,7 +101,7 @@ android {
 
             // 添加稳定 ID 参数
             additionalParameters.addAll(mutableListOf("--stable-ids", publicTxtFile.path))
-        }else{
+        } else {
             println("public.xml不存在")
         }
     }
@@ -165,12 +164,16 @@ afterEvaluate {
             allVariants.forEach { (_, apkFile) ->
                 if (apkFile.exists()) {
                     println("APK 文件路径: ${apkFile.absolutePath}")
-                    val appFlavor = rootDir.resolve("Submodule/AIDE/AIDE-Plus/app_flavor/build.gradle")
+                    val appFlavor =
+                        rootDir.resolve("Submodule/AIDE/AIDE-Plus/app_flavor/build.gradle")
                     makeApk(
                         aideLibraryDir = rootDir.resolve("AIDELibrary"),
                         zipalignFile = File(zipalignPath),
                         apkFile = apkFile,
-                        apkOutputFile = File(apkFile.parentFile, "AIDE-Plus-${Versions.versionName(appFlavor)}.apk"),
+                        apkOutputFile = File(
+                            apkFile.parentFile,
+                            "AIDE-Plus-${Versions.versionName(appFlavor)}.apk"
+                        ),
                         storeFile = file("../debug.jks"),
                         storePassword = "123789456",
                         keyAlias = "androiddebug",

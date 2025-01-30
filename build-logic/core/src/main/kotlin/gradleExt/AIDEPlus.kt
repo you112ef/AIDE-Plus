@@ -43,9 +43,9 @@ fun makeApk(
 
     apkFile.copyTo(unZipAlignSignerApkFile)
 
+    var dexCount = 0
 
     unZipAlignSignerApkFile.apply {
-        var dexCount = 0
         val fileContents = mutableMapOf<String, ByteArray>()
         ZipFile(this).use { zip ->
             zip.entries().asSequence().apply {

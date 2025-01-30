@@ -1,3 +1,5 @@
+import java.util.Locale
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
@@ -5,13 +7,49 @@ plugins {
 }
 
 
-android{
+val allVariants = mutableListOf<String>()
+android {
 
-    buildFeatures{
+    buildFeatures {
         viewBinding = true
         //noinspection DataBindingWithoutKapt
         dataBinding = true
     }
+
+    libraryVariants.all {
+        val variant = this
+        val variantName = variant.name.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
+        allVariants.add(variantName)
+        // 注册生成JAR的任务
+        val createJarTask=tasks.register<Jar>("create${variantName}Jar") {
+            println(variantName)
+            val outputDir = rootDir.resolve("Submodule/AIDE/AIDE-Plus/app_rewrite/AS")
+            println(outputDir)
+            //delete(delete())
+            group = "build"
+            description = "生成 $variantName 版本的 JAR"
+            archiveFileName.set("AIDE-AS-${name}.jar")
+            destinationDirectory.set(outputDir)
+            val javaClasses = javaCompileProvider.get().destinationDirectory.get().asFile
+            val kotlinCompileTask = project.tasks.named(
+                "compile${variantName}Kotlin",
+                org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class.java
+            )
+            val kotlinClasses = kotlinCompileTask.get().destinationDirectory.get().asFile
+            from(javaClasses, kotlinClasses)
+            include(
+                "abcd/v7.class",
+                "io/github/zeroaicy/aide/completion/XmlCompletionUtilsKt.class"
+            )
+            //exclude()
+            dependsOn(javaCompileProvider)
+            dependsOn(kotlinCompileTask)
+        }
+
+        variant.assembleProvider.get().finalizedBy(createJarTask)
+
+    }
+
 }
 
 
@@ -21,12 +59,16 @@ dependencies {
     api(project(":Submodule:Compiletion:Xml:aaptcompiler"))
     api(project(":Submodule:Eclipse:JavaFormatter"))
 
-    api(project(":Submodule:Kotlin:Compiler")){
+    api(project(":Submodule:Kotlin:Compiler")) {
         isTransitive = false
     }
-    api(project(":Submodule:Kotlin:Formatter")){
+    api(project(":Submodule:Kotlin:Formatter")) {
         isTransitive = false
     }
+
+    api(project(":Submodule:Github:Richpath"))
+    api(project(":Submodule:Github:TreeView"))
+
 
     // 新增内容
     api(libs.io.github.itsaky.nb.javac.android)
@@ -47,7 +89,6 @@ dependencies {
     implementation(libs.io.github.rosemoe.sora.editor.editor)
 
 
-
     // appAideBase 项目的依赖
     api(libs.bundles.rikkax.shizuku)
 
@@ -58,7 +99,6 @@ dependencies {
     api(libs.androidx.legacy.support.v4)
 
     api(libs.androidx.multidex)
-
 
 
     // app_rewrite的依赖
@@ -88,7 +128,6 @@ dependencies {
     api(libs.com.android.tools.build.apksig)
 
 
-
     val aideLibraryDir = project.rootDir.resolve("AIDELibrary")
 
 
@@ -106,3 +145,4 @@ dependencies {
 
 
 }
+

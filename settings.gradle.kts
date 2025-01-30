@@ -65,7 +65,7 @@ include(
     ":app_flavor:default",
     ":app_flavor:termux"
 )
-
+// 测试包
 include(
     ":Submodule:TestProject:XmlPackge"
 )
@@ -75,9 +75,16 @@ include(
     ":Submodule:AIDE:app_rewrite",
     ":Submodule:AIDE:appAideBase"
 )
+// 资源
 include(
     ":Submodule:Resource"
 )
+// Github
+include(
+    ":Submodule:Github:Richpath",
+    ":Submodule:Github:TreeView"
+)
+
 
 // xml
 include(

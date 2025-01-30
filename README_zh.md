@@ -59,12 +59,14 @@
 - [x] Java项目支持安卓api
 - [x] Lambda实现 (ecj) [fbf450d](https://github.com/AndroidIDE-CN/AIDE-Plus/commit/fbf450dba15ccaf51a7a6dd77db300d50551e98b)
 - [x] 支持cmake构建 [e702347](https://github.com/AndroidIDE-CN/AIDE-Plus/commit/e702347df0c10b718df5aeb4798402802334e310)
+- [x] Xml补全修改逻辑 [0ecb637](https://github.com/neu233/AIDE-Plus/commit/0ecb637e6cb672723df77925e5642fd4b6016c39)
 
 ### 计划实现
 - [ ] 更多补全 (Lsp)
 - [ ] Apks/AAB的生成(未添加)
 - [ ] 清单文件编辑
 - [ ] 矢量图获取
+- [ ] 重写布局可视化
 
 
 ## 相关资源
@@ -79,16 +81,21 @@
 - [网站](https://plus.androidide.cn)
 
 # 特别感谢
+### 项目相关
 - [@墨凡尘轩](https://github.com/ZeroAicy) 项目创始人
 - [@烂泥扶上墙](https://github.com/eirv) 项目合作者
 - [@原罪](https://github.com/neu233) 项目合作者
 - [@0047ol](https://github.com/0047ol) 项目合作者
 - [@hujiayucc](https://github.com/hujiayucc) 项目合作者
 - [@dev-bz](https://github.com/dev-bz) (不知者来此) 提供了帮助
-
+### 代码借鉴
 - [AndroidIDE](https://github.com/AndroidIDEOfficial/AndroidIDE) 借鉴了部分代码
 - [CodeAssist](https://github.com/tyron12233/CodeAssist) 借鉴了部分代码
 - [Termux-app](https://github.com/termux/termux-app) 集成到软件内部
 - [AIDE-Pro](https://github.com/AndroidIDE-CN/) 借鉴UI
-
-
+- [material-components-android](https://github.com/material-components/material-components-android) MD3界面借鉴
+- ~~[VisualXML](https://github.com/Coyamo/VisualXML)~~ 也许会用到
+- ~~[App-UI-Designer](https://github.com/timscriptov/App-UI-Designer)~~ 也许会用到
+### 开源集成
+- [RichPath](https://github.com/tarek360/RichPath) 用来显示矢量图
+- [TreeView](https://github.com/dingyi222666/TreeView) 实现树型列表
