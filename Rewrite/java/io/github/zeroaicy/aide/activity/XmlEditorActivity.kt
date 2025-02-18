@@ -1,22 +1,36 @@
 package io.github.zeroaicy.aide.activity
 
+import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
+import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
+import androidx.core.animation.doOnEnd
 import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.lifecycleScope
+import com.aide.ui.rewrite.R
 import com.aide.ui.rewrite.databinding.ActivityXmlEditorBinding
+import io.github.dingyi222666.view.treeview.Tree
+import io.github.dingyi222666.view.treeview.TreeNode
+import io.github.dingyi222666.view.treeview.TreeView
 import io.github.zeroaicy.aide.base.BaseAppActivity
+import io.github.zeroaicy.aide.bean.XmlElement
+import io.github.zeroaicy.aide.bean.XmlParser
+import io.github.zeroaicy.aide.utils.parse.XmlBinder
+import io.github.zeroaicy.aide.utils.parse.XmlNodeGenerator
 import io.github.zeroaicy.util.Log
+import kotlinx.coroutines.launch
+import java.io.File
 import kotlin.math.abs
 
 
@@ -58,7 +72,7 @@ class XmlEditorActivity : BaseAppActivity<ActivityXmlEditorBinding>() {
         super.onCreate(savedInstanceState)
         if (intent != null && intent.hasExtra("path")) {
             xmlPath = intent.getStringExtra("path")
-            _binding.layoutDesignerStart.toolbar.title = xmlPath
+            _binding.layoutDesignerStart.toolbar.subtitle = xmlPath
             Log.d("XmlEditorActivity", "Path: $xmlPath")
         } else {
             Log.e("XmlEditorActivity", "No path received in Intent!")
@@ -76,6 +90,7 @@ class XmlEditorActivity : BaseAppActivity<ActivityXmlEditorBinding>() {
         setupDrawer()
         onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
         setupDrawerStart()
+        setupDrawerEnd()
 
     }
 
@@ -135,7 +150,19 @@ class XmlEditorActivity : BaseAppActivity<ActivityXmlEditorBinding>() {
 
     private fun setupDrawerStart() {
         _binding.layoutDesignerStart.apply {
-            designerUiSystemTheme.setSimpleItems(systemResourceTheme.toTypedArray())
+            linearController.setOnClickListener {
+                if (baseSettings.visibility == View.VISIBLE) {
+                    imageviewController.setImageResource(R.drawable.ic_arrow_drop_down_24px)
+                    baseSettings.visibility = View.GONE
+                }else if (baseSettings.visibility == View.GONE){
+                    baseSettings.visibility = View.VISIBLE
+                    imageviewController.setImageResource(R.drawable.ic_arrow_drop_up_24px)
+
+                }
+                designerUiModeDisplay.setThreshold(99999)
+                designerUiModeDisplay.clearFocus()
+
+            }
 
             designerUiVisibilityIsShowAppbar.setOnCheckedChangeListener { _, isChecked ->
                 _binding.layoutDesignerRoot.appbar.visibility =
@@ -163,6 +190,34 @@ class XmlEditorActivity : BaseAppActivity<ActivityXmlEditorBinding>() {
         }
 
 
+    }
+
+    private fun setupDrawerEnd(){
+        _binding.layoutDesignerEnd.apply {
+            treeview.apply {
+                supportHorizontalScroll = true
+                bindCoroutineScope(lifecycleScope)
+                selectionMode = TreeView.SelectionMode.NONE
+                val tree = Tree.createTree<XmlElement>()
+                tree.generator = XmlNodeGenerator()
+                this.tree = tree
+                binder = XmlBinder()
+                val rootElement = XmlParser().parse(File(xmlPath.toString()).inputStream())
+                tree.rootNode = TreeNode(
+                    data = rootElement,
+                    depth = 0,
+                    name = rootElement.name,
+                    id = Tree.ROOT_NODE_ID,
+                    hasChild = rootElement.children.isNotEmpty(),
+                    isChild = true,
+                    expand = true
+                )
+            }
+
+            lifecycleScope.launch {
+                treeview.refresh()
+            }
+        }
     }
 
 
@@ -252,5 +307,41 @@ class XmlEditorActivity : BaseAppActivity<ActivityXmlEditorBinding>() {
                 else -> false
             }
         }
+    }
+}
+
+private fun toggleContentWithHeightAnimation(target: View) {
+    if (target.visibility == View.VISIBLE) {
+        val initialHeight = target.height
+        val anim = ValueAnimator.ofInt(initialHeight, 0).apply {
+            duration = 300
+            addUpdateListener {
+                target.layoutParams.height = it.animatedValue as Int
+                target.requestLayout()
+            }
+            doOnEnd {
+                target.visibility = View.GONE
+                target.layoutParams.height = initialHeight
+            }
+        }
+        anim.start()
+    } else {
+        target.visibility = View.VISIBLE
+        target.measure(
+            View.MeasureSpec.makeMeasureSpec((target.parent as View).width, View.MeasureSpec.EXACTLY),
+            View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+        )
+        val targetHeight = target.measuredHeight
+        val anim = ValueAnimator.ofInt(0, targetHeight).apply {
+            duration = 300
+            addUpdateListener {
+                target.layoutParams.height = it.animatedValue as Int
+                target.requestLayout()
+            }
+            doOnEnd {
+                target.layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
+            }
+        }
+        anim.start()
     }
 }

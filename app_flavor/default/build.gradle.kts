@@ -102,7 +102,7 @@ android {
 
             // 添加稳定 ID 参数
             additionalParameters.addAll(mutableListOf("--stable-ids", publicTxtFile.path))
-        }else{
+        } else {
             println("public.xml不存在")
         }
     }
@@ -153,6 +153,17 @@ dependencies {
 
 }
 
+configurations.all {
+    exclude(group = "org.jetbrains.kotlin", module = "kotlin-compiler-embeddable")
+    exclude(group = "net.java.dev.jna", module = "jna-platform")
+    exclude(group = "net.java.dev.jna", module = "jna")
+    exclude(group = "javax.inject", module = "javax.inject")
+    exclude(group = "org.jetbrains", module = "annotations")
+    exclude(group = "com.google.guava", module = "guava")
+    exclude(group = "com.google.guava", module = "listenablefuture")
+    exclude(group = "org.jetbrains.kotlin", module = "kotlin-compiler-embeddable")
+}
+
 
 afterEvaluate {
     tasks.register("makeApk") {
@@ -160,12 +171,16 @@ afterEvaluate {
             allVariants.forEach { (_, apkFile) ->
                 if (apkFile.exists()) {
                     println("APK 文件路径: ${apkFile.absolutePath}")
-                    val appFlavor = rootDir.resolve("Submodule/AIDE/AIDE-Plus/app_flavor/build.gradle")
+                    val appFlavor =
+                        rootDir.resolve("Submodule/AIDE/AIDE-Plus/app_flavor/build.gradle")
                     makeApk(
                         aideLibraryDir = rootDir.resolve("AIDELibrary"),
                         zipalignFile = File(zipalignPath),
                         apkFile = apkFile,
-                        apkOutputFile = File(apkFile.parentFile, "AIDE-Plus-${Versions.versionName(appFlavor)}.apk"),
+                        apkOutputFile = File(
+                            apkFile.parentFile,
+                            "AIDE-Plus-${Versions.versionName(appFlavor)}.apk"
+                        ),
                         storeFile = file("../debug.jks"),
                         storePassword = "123789456",
                         keyAlias = "androiddebug",

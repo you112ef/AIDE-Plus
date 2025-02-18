@@ -10,6 +10,7 @@
     <string name="designer_ui_mode_display_design">设计模式</string>
     <string name="designer_ui_mode_display_view">视图模式</string>
     <string name="designer_ui_mode_read_only">只读模式</string>
+    <string name="designer_ui_basic_settings_title">基础设置</string>
 
     <string name="designer_ui_system_theme">系统主题</string>
     <string name="designer_ui_app_theme">应用主题</string>

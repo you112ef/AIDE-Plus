@@ -19,6 +19,7 @@ version.txt
 /.idea/caches
 /.idea/shelf
 /.kotlin
+/.vscode
 /AIDELibrary
 /build
 /build-logic/build/

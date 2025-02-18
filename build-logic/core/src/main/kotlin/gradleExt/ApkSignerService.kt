@@ -3,9 +3,6 @@
 package gradleExt
 
 import com.android.apksig.ApkSigner
-import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
-import com.android.build.gradle.internal.dsl.SigningConfig
-import org.gradle.internal.impldep.com.jcraft.jsch.ConfigRepository.defaultConfig
 import java.io.File
 import java.security.KeyStore
 import java.security.PrivateKey
@@ -44,7 +41,7 @@ fun apkSign(
         listOf(certificate)
     ).build()
     val builder = ApkSigner.Builder(listOf(signerConfig))
-    builder.setCreatedBy("Android Gradle 8.7.3")
+    builder.setCreatedBy("Android Gradle 8.8.1")
         .setMinSdkVersion(minSdkVersion)
         .setInputApk(inputApk)
         .setOutputApk(outputApk)

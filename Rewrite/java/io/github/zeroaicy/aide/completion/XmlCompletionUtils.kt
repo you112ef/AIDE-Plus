@@ -468,12 +468,17 @@ fun completionXmlValue(
             return
         }
 
+
         var matcher = attrValue_qualifiedRef.matcher(prefix)
         if (matcher.matches()) {
+            Log.d(TAG, "attrValue_qualifiedRef")
             val valPck = matcher.group(1)
             val typeStr = matcher.group(3)
-            val valType = AaptResourceType.entries.firstOrNull { it.tagName == typeStr } ?: return
+            val valType =
+                AaptResourceType.values().firstOrNull { it.tagName == typeStr }
+                    ?: return
             val newPrefix = matcher.group(4) ?: ""
+            android.util.Log.d(TAG, "attrValue_qualifiedRef $valPck,$typeStr,$valType,$newPrefix")
             model.addValues(valType, newPrefix) { it == valPck }
             return
         }
@@ -483,6 +488,8 @@ fun completionXmlValue(
             val valPck = matcher.group(1)!!
             val incompleteType = matcher.group(3) ?: ""
             model.addResourceTypes(valPck, incompleteType)
+            android.util.Log.d(TAG, "attrValue_qualifiedRefWithIncompleteType $valPck,$incompleteType")
+
             return
         }
 
@@ -493,6 +500,7 @@ fun completionXmlValue(
                 model.addResourceTypes("", valPck)
             }
             model.addPackages(valPck)
+            android.util.Log.d(TAG, "attrValue_qualifiedRefWithIncompletePckOrType $valPck")
             return
         }
 
@@ -502,6 +510,7 @@ fun completionXmlValue(
             val newPrefix = matcher.group(2) ?: ""
             val valType = AaptResourceType.entries.firstOrNull { it.tagName == typeStr } ?: return
             model.addValues(valType, newPrefix)
+            android.util.Log.d(TAG, "attrValue_qualifiedRefWithIncompletePckOrType $valType,$newPrefix,$typeStr")
             return
         }
 
@@ -1171,8 +1180,11 @@ private fun Model.createEnumOrFlagCompletionItem(
     pck: String = "",
     name: String,
 ) {
+    if (pck.isNotBlank()) {
+        codeCompleterCallback.listElementKeywordFound(pck)
+    }
     codeCompleterCallback.listElementKeywordFound(name)
-    AppLog.d("$pck:$name")
+    android.util.Log.d(TAG,"$pck:$name")
 }
 
 

@@ -59,15 +59,12 @@ dependencies {
     api(project(":Submodule:Compiletion:Xml:aaptcompiler"))
     api(project(":Submodule:Eclipse:JavaFormatter"))
 
-    api(project(":Submodule:Kotlin:Compiler")) {
-        isTransitive = false
-    }
-    api(project(":Submodule:Kotlin:Formatter")) {
-        isTransitive = false
-    }
+    api(project(":Submodule:Kotlin:Compiler"))
+    api(project(":Submodule:Kotlin:Formatter"))
 
     api(project(":Submodule:Github:Richpath"))
     api(project(":Submodule:Github:TreeView"))
+    api(project(":Submodule:Github:HideApi"))
 
 
     // 新增内容

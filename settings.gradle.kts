@@ -1,6 +1,7 @@
 @file:Suppress("UnstableApiUsage")
 
 
+
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {
@@ -82,7 +83,8 @@ include(
 // Github
 include(
     ":Submodule:Github:Richpath",
-    ":Submodule:Github:TreeView"
+    ":Submodule:Github:TreeView",
+    ":Submodule:Github:HideApi"
 )
 
 

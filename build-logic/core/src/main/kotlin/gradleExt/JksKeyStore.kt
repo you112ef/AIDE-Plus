@@ -22,7 +22,7 @@ class JksKeyStore : KeyStore {
             if (inited) return
             println("替换bouncycastle版本")
             // 先移除，后添加
-            Security.removeProvider(bouncyCastleProvider.getName())
+            Security.removeProvider(bouncyCastleProvider.name)
 
             Security.addProvider(bouncyCastleProvider)
         }

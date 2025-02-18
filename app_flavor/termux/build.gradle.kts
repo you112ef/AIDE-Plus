@@ -155,6 +155,17 @@ dependencies {
 
 }
 
+configurations.all {
+    exclude(group = "org.jetbrains.kotlin", module = "kotlin-compiler-embeddable")
+    exclude(group = "net.java.dev.jna", module = "jna-platform")
+    exclude(group = "net.java.dev.jna", module = "jna")
+    exclude(group = "javax.inject", module = "javax.inject")
+    exclude(group = "org.jetbrains", module = "annotations")
+    exclude(group = "com.google.guava", module = "guava")
+    exclude(group = "com.google.guava", module = "listenablefuture")
+    exclude(group = "org.jetbrains.kotlin", module = "kotlin-compiler-embeddable")
+}
+
 
 
 
