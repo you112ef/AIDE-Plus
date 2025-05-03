@@ -1,0 +1,256 @@
+package com.aide.codemodel.language.cpp
+
+import abcd.f2
+import com.aide.codemodel.api.ClassType
+import com.aide.codemodel.api.Entity
+import com.aide.codemodel.api.FileEntry
+import com.aide.codemodel.api.Member
+import com.aide.codemodel.api.Model
+import com.aide.codemodel.api.Namespace
+import com.aide.codemodel.api.SyntaxTree
+import com.aide.codemodel.api.Type
+import com.aide.codemodel.api.abstraction.FormatOption
+import com.aide.codemodel.api.abstraction.Language
+import com.aide.codemodel.api.abstraction.Tools
+import com.aide.codemodel.api.callback.TemplateEvaluatorCallback
+import com.aide.codemodel.api.collections.HashtableOfInt
+import com.aide.codemodel.api.collections.ListOfInt
+import com.aide.codemodel.api.collections.MapOf
+import com.aide.codemodel.api.collections.SetOf
+import io.github.zeroaicy.aide.completion.CppCompletionUtils
+
+
+class CppTools(private val model/* j6 */: Model) : Tools {
+
+    private fun Qq(fileEntry: FileEntry, i: Int, i2: Int): Int {
+        val text = fileEntry.Mr(i, i2)
+        var index = text.length - 1
+
+        while (index >= 0) {
+            val ch = text[index]
+            if (!ch.isLetter() && ch != '.') {
+                break
+            }
+            index--
+        }
+
+        return index + 2
+    }
+
+    override fun BT(
+        fileEntry: FileEntry,
+        i: Int,
+        i2: Int,
+        i3: Int,
+        i4: Int,
+        type: Type,
+        iArr: IntArray,
+        typeArr: Array<Type?>,
+        iArr2: IntArray
+    ) {
+    }
+
+    override fun DW(fileEntry: FileEntry?, i: Int, i2: Int) {
+    }
+
+    override fun EQ(namespace: Namespace): String? {
+        return null
+    }
+
+    override fun FH(str: String): Boolean {
+        return false
+    }
+
+    override fun Hw(fileEntry: FileEntry, i: Int, i2: Int, z: Boolean) {
+        // No-op
+    }
+
+    override fun I(fileEntry: FileEntry, i: Int, i2: Int, i3: Int, i4: Int) {
+        // No-op
+    }
+
+    override fun J0(fileEntry: FileEntry, i: Int, i2: Int) {
+        // No-op
+    }
+
+    override fun J8(syntaxTree: SyntaxTree, f2Var: f2, i: Int, i2: Int) {
+        // No-op
+    }
+
+    override fun KD(namespace: Namespace): String? {
+        return null
+    }
+
+    override fun Mr(fileEntry: FileEntry, i: Int, i2: Int) {
+        // No-op
+    }
+
+    override fun Mz(
+        syntaxTree: SyntaxTree,
+        mapOf: MapOf<ClassType, Entity>,
+        setOf: SetOf<Namespace>
+    ): String? {
+        return null
+    }
+
+    override fun P8(fileEntry: FileEntry, i: Int, i2: Int) {
+        // No-op
+    }
+
+    override fun QX(fileEntry: FileEntry, i: Int, i2: Int): Boolean {
+        return false
+    }
+
+    override fun SI(fileEntry: FileEntry, i: Int, i2: Int, i3: Int, i4: Int) {
+        // No-op
+    }
+
+    override fun Sf(syntaxTree: SyntaxTree, i: Int, i2: Int) {
+        // No-op
+    }
+
+    override fun U2(
+        member: Member,
+        listOfInt: ListOfInt,
+        listOfInt2: ListOfInt,
+        listOfInt3: ListOfInt,
+        listOfInt4: ListOfInt,
+        listOfInt5: ListOfInt
+    ): Boolean {
+        return false
+    }
+
+    override fun VH(fileEntry: FileEntry) {
+        // No-op
+    }
+
+    override fun Ws(): String? {
+        return null
+    }
+
+    override fun XL(syntaxTree: SyntaxTree, f2Var: f2, i: Int, i2: Int, i3: Int): HashtableOfInt<Tools.a>? {
+        return null
+    }
+
+    override fun Zo(fileEntry: FileEntry, i: Int, i2: Int) {
+        // No-op
+    }
+
+    override fun a8(fileEntry: FileEntry, i: Int, i2: Int, i3: Int, type: Type) {
+        // No-op
+    }
+
+    override fun aM(
+        syntaxTree: SyntaxTree,
+        i: Int,
+        i2: Int,
+        setOf: SetOf<out Type>,
+        setOf2: SetOf<Entity>
+    ): String? {
+        return null
+    }
+
+    override fun ca(namespace: Namespace): String? {
+        return null
+    }
+
+    override fun cb(syntaxTree: SyntaxTree, i: Int, i2: Int, type: Type): String? {
+        return null
+    }
+
+    override fun cn(fileEntry: FileEntry, i: Int, i2: Int) {
+        // No-op
+    }
+
+    override fun dx(
+        templateEvaluatorCallback: TemplateEvaluatorCallback,
+        fileEntry: FileEntry,
+        i: Int,
+        i2: Int,
+        str: String,
+        list: List<String>
+    ) {
+        // No-op
+    }
+
+    override fun ef(syntaxTree: SyntaxTree, mapOf: MapOf<ClassType, Entity>): String? {
+        return null
+    }
+
+    override fun ei(str: String, str2: String): String? {
+        return null
+    }
+
+
+    override fun er(syntaxTree: SyntaxTree, fileEntry: FileEntry, language: Language, i: Int, i2: Int) {
+        try {
+            if (fileEntry.pathString.endsWith(".gradle")) {
+                with(model.codeCompleterCallback) {
+                    listStarted()
+                    listElementKeywordFound("android {}")
+                    listElementKeywordFound("compileSdkVersion")
+                    listElementKeywordFound("buildToolsVersion")
+                    listElementKeywordFound("useLibrary 'org.apache.http.legacy'")
+                    listElementKeywordFound("dexOptions {}")
+                    listElementKeywordFound("jumboMode true")
+                    listElementKeywordFound("multiDexEnabled true")
+                    listElementKeywordFound("defaultConfig {}")
+                    listElementKeywordFound("namespace 'com.myapp'")
+                    listElementKeywordFound("versionCode")
+                    listElementKeywordFound("versionName")
+                    listElementKeywordFound("minSdkVersion")
+                    listElementKeywordFound("targetSdkVersion")
+                    listElementKeywordFound("buildTypes {}")
+                    listElementKeywordFound("release {}")
+                    listElementKeywordFound("debug {}")
+                    listElementKeywordFound("minifyEnabled true")
+                    listElementKeywordFound("proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'")
+                    listElementKeywordFound("signingConfigs {}")
+                    listElementKeywordFound("storeFile file('../debug.keystore')")
+                    listElementKeywordFound("keyAlias")
+                    listElementKeywordFound("keyPassword")
+                    listElementKeywordFound("storePassword")
+                    listElementKeywordFound("productFlavors {}")
+                    listElementKeywordFound("dependencies {}")
+                    listElementKeywordFound("implementation fileTree(dir: 'libs', include: ['*.jar'])")
+                    listElementKeywordFound("testImplementation 'junit:junit:+'")
+                    listElementKeywordFound("implementation project(':project')")
+                    listElementKeywordFound("implementation 'com.google.android.gms:play-services:+'")
+                }
+                val code = Qq(fileEntry, i, i2)
+                model.codeCompleterCallback.J8(fileEntry, language, i, i2, code, false, false)
+            } else {
+                val code = CppCompletionUtils.completion(model, fileEntry, i, i2)
+                if (code == 0) {
+                    model.codeCompleterCallback.a8(fileEntry, i, i2)
+                    return
+                }
+                model.codeCompleterCallback.J8(fileEntry, language, i, i2, code, false, false)
+            }
+        } catch (th: Throwable) {
+            throw th
+        }
+    }
+
+    override fun g3(fileEntry: FileEntry, i: Int, i2: Int) {}
+    override fun gW(fileEntry: FileEntry, i: Int, i2: Int, member: Member) {}
+    override fun gn(fileEntry: FileEntry, i: Int, i2: Int, str: String, i3: Int, i4: Int, z: Boolean) {}
+    override fun j3(syntaxTree: SyntaxTree, i: Int): Set<FormatOption>? = null
+    override fun j6(syntaxTree: SyntaxTree, f2Var: f2, i: Int, i2: Int, i3: Int): HashtableOfInt<Tools.a>? = null
+    override fun lg(syntaxTree: SyntaxTree, f2Var: f2, i: Int, i2: Int) {}
+    override fun nw(syntaxTree: SyntaxTree, f2Var: f2, i: Int, i2: Int, i3: Int): HashtableOfInt<Tools.a>? = null
+    override fun rN(fileEntry: FileEntry, fileEntry2: FileEntry, i: Int, i2: Int, i3: Int, i4: Int) {}
+    override fun ro(fileEntry: FileEntry, i: Int, i2: Int, str: String, i3: Int) {}
+    override fun sG(fileEntry: FileEntry, str: String) {}
+    override fun sh(fileEntry: FileEntry, i: Int, i2: Int, i3: Int, i4: Int, type: Type) {}
+    override fun tp(fileEntry: FileEntry, i: Int, i2: Int, i3: Int, i4: Int) {}
+    override fun u7(fileEntry: FileEntry, i: Int, i2: Int, i3: Int, i4: Int) {}
+    override fun v5(syntaxTree: SyntaxTree, f2Var: f2, i: Int, i2: Int): IntArray = intArrayOf()
+    override fun vJ(syntaxTree: SyntaxTree?, i: Int, i2: Int, p3: SetOf<out Type>?): String? = null
+    override fun vy(fileEntry: FileEntry, member: Member, listOfInt: ListOfInt, listOfInt2: ListOfInt, listOfInt3: ListOfInt, listOfInt4: ListOfInt, listOfInt5: ListOfInt) {}
+    override fun we(fileEntry: FileEntry, i: Int, i2: Int) {}
+    override fun x9(fileEntry: FileEntry, i: Int, i2: Int, i3: Int, i4: Int) {}
+    override fun yS(syntaxTree: SyntaxTree, i: Int, i2: Int, i3: Int, z: Boolean) {}
+
+
+}

@@ -68,7 +68,8 @@ include(
 )
 // 测试包
 include(
-    ":Submodule:TestProject:XmlPackge"
+    ":Submodule:TestProject:XmlPackge",
+    ":Submodule:TestProject:KotlincTest"
 )
 
 // 底包
@@ -78,7 +79,7 @@ include(
 )
 // 资源
 include(
-    ":Submodule:Resource"
+    ":Submodule:NewBase"
 )
 // Github
 include(
@@ -101,15 +102,14 @@ include(
 
 // jaxp
 include(
-    ":Submodule:JDK:Jaxp-Xml",
-    ":Submodule:JDK:Jaxp-Kotlin"
+    ":Submodule:Build-deps:Jaxp-Xml",
+    ":Submodule:Build-deps:Jaxp-Kotlin"
 )
 
 // kotlin
 include(
     ":Submodule:Kotlin:Compiler",
-    ":Submodule:Kotlin:Formatter",
-    ":Submodule:Kotlin:Core"
+    ":Submodule:Kotlin:the-unsafe"
 )
 
 // termux

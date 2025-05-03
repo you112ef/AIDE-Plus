@@ -14,6 +14,7 @@ import com.aide.ui.ServiceContainer;
 import com.aide.ui.command.KeyStrokeCommand;
 import com.aide.ui.command.MenuCommand;
 import com.aide.ui.rewrite.R;
+import com.aide.ui.rewrite.databinding.ActivityJsonEditorBinding;
 import com.aide.ui.services.ProjectSupport;
 import com.aide.ui.util.FileSystem;
 import com.probelytics.Probelytics;
@@ -21,7 +22,8 @@ import com.probelytics.annotation.ExceptionEnabled;
 import com.probelytics.annotation.MethodMark;
 import com.probelytics.annotation.ParametersEnabled;
 
-import io.github.zeroaicy.aide.activity.XmlEditorActivity;
+import io.github.zeroaicy.aide.activity.JsonEditorActivity;
+import io.github.zeroaicy.aide.activity.ManifestEditorActivity;
 import io.github.zeroaicy.util.ContextUtil;
 
 public class x9 implements rf, KeyStrokeCommand, MenuCommand {
@@ -194,7 +196,7 @@ public class x9 implements rf, KeyStrokeCommand, MenuCommand {
             if (parametersEnabled) {
                 Probelytics.printlnParameters(-1506304257380643275L, this);
             }
-            return gotoXmlEditorActivity();
+            return gotoPreviewEditorActivity();
         } catch (Throwable th) {
             if (exceptionEnabled) {
                 Probelytics.printlnException(th, -1506304257380643275L, this);
@@ -221,20 +223,28 @@ public class x9 implements rf, KeyStrokeCommand, MenuCommand {
     }
 
 
-    public boolean gotoXmlEditorActivity() {
+    public boolean gotoPreviewEditorActivity() {
         String isProjectDirectory;
         String visibleFile = ServiceContainer.getOpenFileService().getVisibleFile();
         if (visibleFile == null || (isProjectDirectory = isProjectDirectory(visibleFile)) == null) {
             return false;
         }
-        if (visibleFile.endsWith(".xml")){
+        if (visibleFile.endsWith("/AndroidManifest.xml")){
             Context context = ContextUtil.getContext();
-            Intent intent = new Intent(context, XmlEditorActivity.class);
+            Intent intent = new Intent(context, ManifestEditorActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra("path", visibleFile);
             context.startActivity(intent);
             return true;
+        } else if (visibleFile.endsWith("json")) {
+            Context context = ContextUtil.getContext();
+            Intent intent = new Intent(context, JsonEditorActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra("path", visibleFile);
+            context.startActivity(intent);
         }
+
+
         ServiceContainer.getOpenFileService().KD(true, false);
         ServiceContainer.getMainActivity().getAIDEEditorPager().Eq();
         getProjectSupport(isProjectDirectory).ei(visibleFile);

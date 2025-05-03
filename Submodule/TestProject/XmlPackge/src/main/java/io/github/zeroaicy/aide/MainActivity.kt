@@ -27,20 +27,19 @@ import com.android.aaptcompiler.ResourceTablePackage
 import com.android.aaptcompiler.Styleable
 import com.android.aaptcompiler.findEntries
 import io.github.zeroaicy.aide.aaptcompiler.ApiVersionsUtils
-import io.github.zeroaicy.aide.aaptcompiler.JavaViewUtils
 import io.github.zeroaicy.aide.aaptcompiler.NAMESPACE_AUTO
 import io.github.zeroaicy.aide.aaptcompiler.ResourceUtils
 import io.github.zeroaicy.aide.aaptcompiler.WidgetTableUtils
-import io.github.zeroaicy.aide.aaptcompiler.databinding.ActivityAttrBinding
-import io.github.zeroaicy.aide.aaptcompiler.databinding.ActivityMainBinding
-import io.github.zeroaicy.aide.aaptcompiler.databinding.ActivityTagBinding
-import io.github.zeroaicy.aide.aaptcompiler.databinding.ActivityValueBinding
 import io.github.zeroaicy.aide.aaptcompiler.interfaces.widgets.Widget
 import io.github.zeroaicy.aide.aaptcompiler.interfaces.widgets.WidgetTable
 import io.github.zeroaicy.aide.aaptcompiler.utils.attrValue_qualifiedRef
 import io.github.zeroaicy.aide.aaptcompiler.utils.attrValue_qualifiedRefWithIncompletePckOrType
 import io.github.zeroaicy.aide.aaptcompiler.utils.attrValue_qualifiedRefWithIncompleteType
 import io.github.zeroaicy.aide.aaptcompiler.utils.attrValue_unqualifiedRef
+import io.github.zeroaicy.aide.test.aaptcompiler.databinding.ActivityAttrBinding
+import io.github.zeroaicy.aide.test.aaptcompiler.databinding.ActivityMainBinding
+import io.github.zeroaicy.aide.test.aaptcompiler.databinding.ActivityTagBinding
+import io.github.zeroaicy.aide.test.aaptcompiler.databinding.ActivityValueBinding
 import java.io.File
 
 class MainActivity : AppCompatActivity() {
@@ -52,7 +51,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var resourceUtil: ResourceUtils
     private lateinit var apiVersionsUtil: ApiVersionsUtils
     private lateinit var widgetTableUtil: WidgetTableUtils
-    private lateinit var javaViewUtils: JavaViewUtils
 
 
     val dimensionUnits =
@@ -74,10 +72,9 @@ class MainActivity : AppCompatActivity() {
         activityTagBinding = ActivityTagBinding.inflate(layoutInflater)
         activityValueBinding = ActivityValueBinding.inflate(layoutInflater)
 
-        resourceUtil = ResourceUtils.getInstance(getPlatformDir());
-        apiVersionsUtil = ApiVersionsUtils.getInstance(getPlatformDir());
-        widgetTableUtil = WidgetTableUtils.getInstance(getPlatformDir());
-        javaViewUtils = JavaViewUtils.getInstance();
+        resourceUtil = ResourceUtils.getInstance(getPlatformDir())
+        apiVersionsUtil = ApiVersionsUtils.getInstance(getPlatformDir())
+        widgetTableUtil = WidgetTableUtils.getInstance(getPlatformDir())
 
 
 
@@ -118,9 +115,9 @@ class MainActivity : AppCompatActivity() {
             }
 
             findAttr.setOnClickListener {
-                var namespace = editorNamespace.text.toString()
-                var attrName = editorAttr.text.toString()
-                var prefix = editorPrefix.text.toString()
+                val namespace = editorNamespace.text.toString()
+                val attrName = editorAttr.text.toString()
+                val prefix = editorPrefix.text.toString()
                 var attrValue: String? = null
 
                 if (namespace.isBlank()) {
@@ -190,7 +187,7 @@ class MainActivity : AppCompatActivity() {
                 if (matcher.matches()) {
                     val typeStr = matcher.group(1)
                     val newPrefix = matcher.group(2) ?: ""
-                    val valType = AaptResourceType.values().firstOrNull { it.tagName == typeStr }
+                    val valType = AaptResourceType.entries.firstOrNull { it.tagName == typeStr }
                         ?: return@setOnClickListener
                     addValues(valType, newPrefix)
                     return@setOnClickListener
@@ -287,16 +284,16 @@ class MainActivity : AppCompatActivity() {
     fun testJavaView() {
         setContentView(activityMainBinding.root)
         ///加载jar然后获取其中的class否是view
-        val viewUtils = JavaViewUtils.getInstance()
+        //val viewUtils = JavaViewUtils.getInstance()
         activityMainBinding.loadjar.setOnClickListener {
-            viewUtils.loadJar(File(activityMainBinding.editor.text.toString()))
+            //viewUtils.loadJar(File(activityMainBinding.editor.text.toString()))
         }
         activityMainBinding.printclass.setOnClickListener {
             activityMainBinding.textview.text = ""
-            JavaViewUtils.getJavaViewClasses().forEach { (s, javaClass) ->
+            /*JavaViewUtils.getJavaViewClasses().forEach { (s, javaClass) ->
                 activityMainBinding.textview.append("\n")
                 activityMainBinding.textview.append(s)
-            }
+            }*/
         }
     }
 

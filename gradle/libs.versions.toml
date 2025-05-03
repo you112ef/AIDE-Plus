@@ -5,28 +5,28 @@ junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 
 
-androidx-collection-ktx = "1.4.5"
+androidx-collection-ktx = "1.5.0"
 androidx-legacy-support-v4 = "1.0.0"
 androidx-multidex = "2.0.1"
 androidx-swiperefreshlayout = "1.1.0"
-androidx-constraintlayout = "2.2.0"
+androidx-constraintlayout = "2.2.1"
 androidx-appcompat = "1.7.0"
 androidx-preference = "1.2.1"
 androidx-lifecycle-compose = "2.8.7"
-androidx-core-kts = "1.15.0"
+androidx-core-kts = "1.16.0"
 
 
-androidx-navigation = "2.8.7"
+androidx-navigation = "2.8.9"
 androidx-hilt-navigation-compose = "1.2.0"
 
 
-androidx-activity-compose = "1.10.0"
-androidx-compose-bom = "2025.02.00"
+androidx-activity-compose = "1.10.1"
+androidx-compose-bom = "2025.04.00"
 androidx-wear-compose = "1.4.1"
 
 
 
-androidx-constraintlayout-compose = "1.1.0"
+androidx-constraintlayout-compose = "1.1.1"
 androidx-lifecycle-runtime-compose = "2.8.7"
 
 
@@ -38,12 +38,16 @@ com-google-android-material = "1.12.0"
 
 com-android-tools-build-apksig = "8.5.2"
 
+com-google-auto-value = "1.11.0"
 
 com-android-tools-aapt2-proto = "8.3.2-10880808"
-com-android-tools-annotations = "31.8.1"
-com-android-tools-common = "31.8.1"
+com-android-tools-annotations = "31.9.2"
+com-android-tools-common = "31.9.2"
 
 com-google-googlejavaformat-google-java-format = "1.24.0"
+
+
+com-google-prefab-api = "2.1.0"
 
 com-facebook-ktfmt = "0.54"
 
@@ -67,10 +71,10 @@ org-apache-maven-model = "3.9.1"
 #noinspection GradleDependency
 commons-io = "2.5"
 
-android-tools-desugar-jdk-libs = "2.1.4"
+android-tools-desugar-jdk-libs = "2.1.5"
 
 com-google-guava = "33.3.1-android"
-com-google-code-gson = "2.11.0"
+com-google-code-gson = "2.13.0"
 
 
 com-google-dagger-hilt-pluginVersion = "2.51.1"
@@ -87,6 +91,8 @@ io-github-bumptech-glide-compose = "1.0.0-beta01"
 io-github-itsaky-nb-javac-android = "17.0.0.3"
 
 io-github-rosemoe-sora-editorVersion = "0.23.5"
+io-github-topjohnwu-libsu-version = "5.3.0"
+
 io-github-lsposed-hiddenapibypass = "4.3"
 io-github-scwang90-smartRefreshLayoutVersion = "2.1.0"
 io-github-kongzue-dialogX = "0.0.50.beta20"
@@ -110,11 +116,11 @@ net-margaritov-preference-colorpickercolorpickerpreference = "1.0.0"
 #noinspection GradleDependency
 com-fasterxml-jackson-dataformatVersion = "2.15.2"
 
-androidGradlePlugin = "8.8.1"
+androidGradlePlugin = "8.9.2"
 kotlinGradlePlugin = "2.1.10"
 googleDagge = "2.55"
 devtoolsKsp = "2.1.10-1.0.30"
-androidx-benchmark-macro = "1.3.3"
+androidx-benchmark-macro = "1.3.4"
 com-google-protobuf-java = "4.28.2"
 org-jetbrains-intellij-deps-trove4j = "1.0.20200330"
 com-github-megatronking-svg-support = "1.3.2"
@@ -170,6 +176,13 @@ com-google-android-horologist-media-ui = { module = "com.google.android.horologi
 com-google-android-horologist-roboscreenshots = { module = "com.google.android.horologist:horologist-roboscreenshots", version.ref = "com-google-android-horologist" }
 
 com-google-googlejavaformat-google-java-format = { module = "com.google.googlejavaformat:google-java-format", version.ref = "com-google-googlejavaformat-google-java-format" }
+
+com-google-prefab-api = { module = "com.google.prefab:api", version.ref = "com-google-prefab-api" }
+
+
+com-google-auto-value-annotations = { module = "com.google.auto.value:auto-value-annotations", version.ref = "com-google-auto-value" }
+com-google-auto-value = { module = "com.google.auto.value:auto-value", version.ref = "com-google-auto-value" }
+
 
 com-android-tools-build-gradle = { group = "com.android.tools.build",name="gradle", version.ref = "androidGradlePlugin" }
 com-android-tools-build-apksig = { module = "com.android.tools.build:apksig", version.ref = "com-android-tools-build-apksig" }
@@ -329,6 +342,12 @@ io-github-rosemoe-sora-editor-language-textmate = { module = "io.github.Rosemoe.
 io-github-rosemoe-sora-editor-language-treesitter = { module = "io.github.Rosemoe.sora-editor:language-treesitter", version.ref = "io-github-rosemoe-sora-editorVersion" }
 
 
+
+io-github-topjohnwu-libsu-core = { module = "com.github.topjohnwu.libsu:core", version.ref = "io-github-topjohnwu-libsu-version" }
+io-github-topjohnwu-libsu-io = { module = "com.github.topjohnwu.libsu:io", version.ref = "io-github-topjohnwu-libsu-version" }
+io-github-topjohnwu-libsu-nio = { module = "com.github.topjohnwu.libsu:nio", version.ref = "io-github-topjohnwu-libsu-version" }
+io-github-topjohnwu-libsu-service = { module = "com.github.topjohnwu.libsu:service", version.ref = "io-github-topjohnwu-libsu-version" }
+
 io-noties-markwon-core = { module = "io.noties.markwon:core", version.ref = "io-noties-markwonVersion" }
 io-noties-markwon-ext-strikethrough = { module = "io.noties.markwon:ext-strikethrough", version.ref = "io-noties-markwonVersion" }
 io-noties-markwon-linkify = { module = "io.noties.markwon:linkify", version.ref = "io-noties-markwonVersion" }
@@ -401,6 +420,12 @@ okhttps = [
     "com-fasterxml-jackson-module-kotlin",
     "com-fasterxml-jackson-core-databind",
     "io-github-zhzc0x-cxhttp"
+]
+libsu =[
+    "io-github-topjohnwu-libsu-core",
+    "io-github-topjohnwu-libsu-io",
+    "io-github-topjohnwu-libsu-nio",
+    "io-github-topjohnwu-libsu-service"
 ]
 
 coil = ["io-coil-compose", "io-coil-kt", "io-coil-svg"]

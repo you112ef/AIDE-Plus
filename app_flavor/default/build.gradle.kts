@@ -130,15 +130,8 @@ android {
 
 dependencies {
 
-    api(project(":Submodule:AIDE:app_rewrite"))
-    api(project(":Submodule:AIDE:appAideBase"))
 
-    api(project(":Submodule:Resource"))
-
-
-    // androidx&material和其他杂七杂八的框架
-    api(libs.bundles.google.androidx)
-
+    api(project(":Submodule:NewBase"))
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

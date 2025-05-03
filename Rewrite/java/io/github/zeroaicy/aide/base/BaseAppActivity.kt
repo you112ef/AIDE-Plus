@@ -1,11 +1,18 @@
+@file:Suppress("DEPRECATION")
+
 package io.github.zeroaicy.aide.base
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
+import android.content.res.Resources
+import android.os.Build
 import android.os.Bundle
+import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.toColorInt
 import androidx.viewbinding.ViewBinding
 import com.aide.ui.rewrite.R
 import com.hjq.language.MultiLanguages
@@ -14,10 +21,11 @@ import io.github.zeroaicy.aide.preference.ZeroAicySetting
 import io.github.zeroaicy.aide.ui.windowpreferences.WindowPreferencesManager
 import io.github.zeroaicy.aide.utils.ActivityBinding
 import io.github.zeroaicy.aide.utils.ActivityBindingDelegate
+import io.github.zeroaicy.util.BarUtils
 import io.github.zeroaicy.util.Log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import java.util.*
+import java.util.Locale
 
 /*
 author : 罪慾
@@ -44,23 +52,110 @@ abstract class BaseAppActivity<VB : ViewBinding> : AppCompatActivity(),
 
     override fun onConfigurationChanged(configuration: Configuration) {
         super.onConfigurationChanged(configuration)
-        initTheme()
+        enableFollowSystem(true)
     }
 
-    private fun initTheme() {
+
+    override fun onResume() {
+        super.onResume()
+        enableFollowSystem(true)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        setStatusBar(window)
+    }
+
+
+    override fun attachBaseContext(newBase: Context) {
+        // 绑定语种
+        super.attachBaseContext(MultiLanguages.attach(newBase))
+    }
+
+    open fun shouldApplyEdgeToEdgePreference(): Boolean {
+        return true
+    }
+
+
+    @SuppressLint("ObsoleteSdkInt")
+    fun setStatusBar(window: Window) {
+        setNavBar(window)
+        if (true) {
+            if (Build.VERSION.SDK_INT < 23 && ZeroAicySetting.isLightTheme()) {
+                window.statusBarColor = getThemeAttrColor(android.R.attr.colorPrimaryDark)
+            } else {
+                window.statusBarColor = getThemeAttrColor(android.R.attr.colorPrimary)
+            }
+        } else {
+            window.statusBarColor = getThemeAttrColor(android.R.attr.colorPrimaryDark)
+        }
+
+        if (Build.VERSION.SDK_INT >= 23) {
+            val decorView = window.decorView
+            if (ZeroAicySetting.isLightTheme()) {
+                decorView.systemUiVisibility = decorView.systemUiVisibility or 8192
+            } else {
+                decorView.systemUiVisibility = decorView.systemUiVisibility and -8193
+            }
+        }
+    }
+
+
+    private fun setNavBar(window: Window) {
+        if (Build.VERSION.SDK_INT >= 27 && ZeroAicySetting.isLightTheme()) {
+            BarUtils.setNavBarColor(
+                window,
+                ContextCompat.getColor(window.context, android.R.color.white)
+            )
+            BarUtils.setNavBarLightMode(window, true)
+            return
+        }
+
+        if (!ZeroAicySetting.isLightTheme() && dp2px(BarUtils.getNavBarHeight().toFloat()) < dp2px(
+                50f
+            )
+        ) {
+            BarUtils.setNavBarColor(window, "#ff212121".toColorInt())
+            //BarUtils.setNavBarColor(window, ContextCompat.getColor(window.getContext(), R.color.app_background));
+        }
+    }
+
+    private fun getThemeAttrColor(attrId: Int): Int {
+        val a = obtainStyledAttributes(intArrayOf(attrId))
+        try {
+            return a.getColor(0, 0)
+        } finally {
+            a.recycle()
+        }
+    }
+
+    private fun dp2px(dpValue: Float): Int {
+        val scale = Resources.getSystem().displayMetrics.density
+        return (dpValue * scale + 0.5f).toInt()
+    }
+
+
+    private fun enableFollowSystem(recreate: Boolean) {
+        if (ZeroAicySetting.enableFollowSystem()) {
+            if (ZeroAicySetting.isNightMode(this)) {
+                if (ZeroAicySetting.isLightTheme()) {
+                    //修改主题为暗主题
+                    ZeroAicySetting.setLightTheme(false)
+                    if (recreate) recreate()
+                }
+            } else {
+                if (!ZeroAicySetting.isLightTheme()) {
+                    //修改主题为亮主题
+                    ZeroAicySetting.setLightTheme(true)
+                    if (recreate) recreate()
+                }
+            }
+        }
+
+
         // 是否需要重启
 
         val restart = booleanArrayOf(false)
-
-        if (ZeroAicySetting.enableFollowSystem()) {
-            ZeroAicySetting.setLightTheme(ZeroAicySetting.isNightMode(this))
-        }
-        if (ZeroAicySetting.isLightTheme()) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-        }
-        restart[0] = true
 
         MultiLanguages.setOnLanguageListener(object : OnLanguageListener {
             override fun onAppLocaleChange(oldLocale: Locale, newLocale: Locale) {
@@ -87,15 +182,7 @@ abstract class BaseAppActivity<VB : ViewBinding> : AppCompatActivity(),
             overridePendingTransition(R.anim.activity_alpha_in, R.anim.activity_alpha_out)
             finish()
         }
-    }
 
-    override fun attachBaseContext(newBase: Context) {
-        // 绑定语种
-        super.attachBaseContext(MultiLanguages.attach(newBase))
-    }
-
-    open fun shouldApplyEdgeToEdgePreference(): Boolean {
-        return true
     }
 
 }

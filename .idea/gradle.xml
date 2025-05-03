@@ -26,6 +26,9 @@
             <option value="$PROJECT_DIR$/Submodule/AIDE" />
             <option value="$PROJECT_DIR$/Submodule/AIDE/appAideBase" />
             <option value="$PROJECT_DIR$/Submodule/AIDE/app_rewrite" />
+            <option value="$PROJECT_DIR$/Submodule/Build-deps" />
+            <option value="$PROJECT_DIR$/Submodule/Build-deps/Jaxp-Kotlin" />
+            <option value="$PROJECT_DIR$/Submodule/Build-deps/Jaxp-Xml" />
             <option value="$PROJECT_DIR$/Submodule/Compiletion" />
             <option value="$PROJECT_DIR$/Submodule/Compiletion/Xml" />
             <option value="$PROJECT_DIR$/Submodule/Compiletion/Xml/aaptcompiler" />
@@ -35,20 +38,17 @@
             <option value="$PROJECT_DIR$/Submodule/Github/HideApi" />
             <option value="$PROJECT_DIR$/Submodule/Github/Richpath" />
             <option value="$PROJECT_DIR$/Submodule/Github/TreeView" />
-            <option value="$PROJECT_DIR$/Submodule/JDK" />
-            <option value="$PROJECT_DIR$/Submodule/JDK/Jaxp-Kotlin" />
-            <option value="$PROJECT_DIR$/Submodule/JDK/Jaxp-Xml" />
             <option value="$PROJECT_DIR$/Submodule/Kotlin" />
             <option value="$PROJECT_DIR$/Submodule/Kotlin/Compiler" />
-            <option value="$PROJECT_DIR$/Submodule/Kotlin/Core" />
-            <option value="$PROJECT_DIR$/Submodule/Kotlin/Formatter" />
-            <option value="$PROJECT_DIR$/Submodule/Resource" />
+            <option value="$PROJECT_DIR$/Submodule/Kotlin/the-unsafe" />
+            <option value="$PROJECT_DIR$/Submodule/NewBase" />
             <option value="$PROJECT_DIR$/Submodule/Termux" />
             <option value="$PROJECT_DIR$/Submodule/Termux/app" />
             <option value="$PROJECT_DIR$/Submodule/Termux/terminal-emulator" />
             <option value="$PROJECT_DIR$/Submodule/Termux/terminal-view" />
             <option value="$PROJECT_DIR$/Submodule/Termux/termux-shared" />
             <option value="$PROJECT_DIR$/Submodule/TestProject" />
+            <option value="$PROJECT_DIR$/Submodule/TestProject/KotlincTest" />
             <option value="$PROJECT_DIR$/Submodule/TestProject/XmlPackge" />
             <option value="$PROJECT_DIR$/app_flavor" />
             <option value="$PROJECT_DIR$/app_flavor/default" />
@@ -57,7 +57,6 @@
             <option value="$PROJECT_DIR$/build-logic/core" />
           </set>
         </option>
-        <option name="resolveExternalAnnotations" value="false" />
       </GradleProjectSettings>
     </option>
   </component>

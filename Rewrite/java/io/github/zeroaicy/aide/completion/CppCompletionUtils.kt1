@@ -1,0 +1,611 @@
+package io.github.zeroaicy.aide.completion
+
+import com.aide.codemodel.api.FileEntry
+import com.aide.codemodel.api.Model
+import com.aide.codemodel.api.SyntaxTree
+import com.aide.codemodel.api.abstraction.Language
+import com.aide.codemodel.api.callback.CodeCompleterCallback
+import org.json.JSONArray
+import org.json.JSONException
+import org.json.JSONObject
+import java.io.IOException
+import java.io.InputStream
+import java.io.OutputStream
+import java.io.Reader
+import java.io.StringWriter
+import java.io.Writer
+import java.nio.file.Paths
+import java.util.concurrent.CompletableFuture
+import java.util.concurrent.CompletionException
+
+/**
+ * @author: 罪慾
+ * @github: https://github.com/neu233/
+ * @mail: 3115093767@qq.com
+ * @createTime: 2025/2/3
+ *
+ *
+ *
+ *     在 CodeCompleterCallback 类需要添加下面的方法
+ *     void load(Parcel parcel)
+ *     void put(String str, String str2, String str3, String str4, int i, boolean z)
+ *
+ */
+
+
+class CppCompletionUtils : Thread(), (JSONObject) -> Unit{
+
+    private var notification: ((JSONObject) -> Unit)? = null
+    private val work = CompletableFuture<JSONObject>()
+    private val files = mutableMapOf<String, VersionedFile>()
+    private val requests = mutableMapOf<Int, CompletableFuture<JSONObject>>()
+    private lateinit var outputStream: OutputStream
+    private var rootUri: String? = null
+    private var symbol: JSONArray? = null
+    private var symbols: String = ""
+    private var ID = 0
+
+
+    override fun invoke(data: JSONObject) {
+        val hasId = data.has("id")
+        val method = data.optString("method", null)
+
+        if (method == null) {
+            if (hasId) {
+                requests.remove(data.optInt("id"))?.complete(data)
+            }
+        } else if (hasId) { // Request
+            val id = data.optInt("id")
+            CompletableFuture.runAsync {
+                val result = response(method, data)
+                notification(id, result)
+            }
+        } else { // Notification
+            when (method) {
+                "textDocument/publishDiagnostics" -> {
+                    try {
+                        val params = data.getJSONObject("params")
+                        val diagnostics = params.getJSONArray("diagnostics")
+
+                        if (notification == null) {
+                            for (i in 0 until diagnostics.length()) {
+                                println("\u001B[31m${diagnostics.getJSONObject(i).getString("message")}\u001B[39m")
+                            }
+                            println(params.toString(2))
+                        } else {
+                            notification?.invoke(params)
+                        }
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
+                    }
+                }
+            }
+        }
+    }
+
+    override fun run() {
+        try {
+            val process = CompletableFuture<String>()
+            val exec = Runtime.getRuntime().exec(arrayOf("/system/bin/netcat", "localhost", "9000"))
+            outputStream = exec.outputStream
+            outputStream.write("echo process: $$;exec clangd --fallback-style=LLVM\n".toByteArray())
+            outputStream.flush()
+            process.thenAccept { processId ->
+                val params = JSONObject().apply {
+                    put("processId", processId.toInt())
+                    put("rootUri", rootUri)
+                }
+                request("initialize", params).thenAccept {
+                    notification("initialized", JSONObject())
+                    work.complete(it)
+                }
+            }
+            fatch(exec.inputStream, this, process)
+            if (!work.isDone) work.complete(JSONObject())
+        } catch (e: IOException) {
+            if (!work.isDone) work.completeExceptionally(e)
+        }
+    }
+
+
+    companion object {
+
+        /**
+         * 服务启动
+         *
+         * */
+        fun launchService() {
+
+        }
+
+
+        private var lsp: CppCompletionUtils? = null
+        /**
+         * 初始化设置
+         * */
+        @JvmStatic
+        fun prepare(rootUri: String?, notification: ((JSONObject) -> Unit)?) {
+            if (lsp == null) {
+                lsp = CppCompletionUtils().apply {
+                    this.notification = notification
+                    this.rootUri = rootUri
+                    start()
+                    work.join()
+                }
+            }
+        }
+
+        /**
+         * 补全
+         * 埋点在 CppTools.er(SyntaxTree,FileEntry,Language,Int,Int)
+         * */
+        fun completion(model: Model, fileEntry: FileEntry, line: Int, column: Int): Int {
+            val pathString = fileEntry.pathString
+            val extensionChar = pathString.getOrNull(pathString.lastIndexOf('.') + 1) ?: return 0
+            if ("ch".indexOf(extensionChar) == -1) return 0
+
+            val codeCompleterCallback = model.codeCompleterCallback
+            codeCompleterCallback.listStarted()
+            prepare(null, lsp.notification(model))
+
+            val fileContent = try {
+                StringWriter().also { writer -> fileEntry.reader.transferTo1(writer) }.toString()
+            } catch (e: IOException) {
+                return 0
+            }
+
+            var lineStartIndex = 0
+            var lineCount = 1
+            while (lineCount < line) {
+                val nextNewLine = fileContent.indexOf('\n', lineStartIndex)
+                if (nextNewLine == -1) break
+                lineStartIndex = nextNewLine + 1
+                lineCount++
+            }
+
+            var wordEndIndex = (lineStartIndex + column - 1).coerceAtMost(fileContent.length)
+            while (wordEndIndex > lineStartIndex && fileContent[wordEndIndex - 1].isJavaIdentifierPart()) {
+                wordEndIndex--
+            }
+
+            for (language in fileEntry.codeModel.languages) {
+                val completionJson = completion(
+                    line - 1, column - 1, -1,
+                    Paths.get(pathString).toUri().toString(), fileContent
+                )
+
+                if (lsp.code(
+                        model,
+                        fileEntry,
+                        language,
+                        codeCompleterCallback,
+                        completionJson
+                    )
+                ) {
+                    for (j in 0 until completionJson.length()) {
+                        try {
+                            val item = completionJson.getJSONObject(j)
+                            codeCompleterCallback.listElementKeywordFound(item.getString("filterText"))
+                        } catch (_: JSONException) {
+                            // 忽略无效条目
+                        }
+                    }
+                }
+            }
+
+            return (wordEndIndex - lineStartIndex) + 1
+
+
+        }
+
+        /**
+         * 分析
+         * 一般埋点在 CppCodeModel.fillSyntaxTree(FileEntry,Reader,MutableMap<Language, SyntaxTree>,Boolean)
+         * */
+        fun analyzer(syntaxTree: SyntaxTree?) {
+            if (syntaxTree != null) {
+                val file = syntaxTree.file
+                val pathString = file.pathString
+                // 检查扩展名是否为 'c' 或 'h'，否则直接返回
+                val extIndex = pathString.lastIndexOf('.') + 1
+                if (extIndex == 0 || extIndex >= pathString.length || !"ch".contains(pathString[extIndex])) {
+                    return
+                }
+                prepare(null, notification(syntaxTree.model))
+                val content = try {
+                    StringWriter().apply {
+                        file.reader.transferTo1(this)
+                    }.toString()
+                } catch (_: IOException) {
+                    return
+                }
+                val uri = Paths.get(pathString).toUri().toString()
+                update(uri, content)
+            }
+        }
+
+
+
+
+
+
+
+        @JvmStatic
+        fun rename(uri: String, code: String, line: Int, column: Int, name: String): JSONArray? {
+            if (update(uri, code)) return null
+            return try {
+                lsp?.request(
+                    "textDocument/rename",
+                    JSONObject().apply {
+                        put("textDocument", JSONObject().put("uri", uri))
+                        put("position", JSONObject().put("line", line).put("character", column))
+                        put("newName", name)
+                    }
+                )?.join()?.getJSONObject("result")?.getJSONObject("changes")?.getJSONArray(uri)
+            } catch (e: JSONException) {
+                null
+            }
+        }
+
+        @JvmStatic
+        fun prepareRename(uri: String, code: String, line: Int, column: Int): JSONObject {
+            if (update(uri, code)) throw JSONException("LSP isn't running!")
+            val response = lsp?.request(
+                "textDocument/prepareRename",
+                JSONObject().apply {
+                    put("textDocument", JSONObject().put("uri", uri))
+                    put("position", JSONObject().put("line", line).put("character", column))
+                }
+            )?.join() ?: throw JSONException("No response from LSP")
+            if (response.has("error")) throw JSONException(response.getJSONObject("error").getString("message"))
+            return response.getJSONObject("result")
+        }
+
+        @JvmStatic
+        fun formatting(uri: String, code: String): JSONArray? {
+            if (update(uri, code)) return null
+            return try {
+                lsp?.request(
+                    "textDocument/formatting",
+                    JSONObject().put("textDocument", JSONObject().put("uri", uri))
+                )?.join()?.getJSONArray("result")?.takeIf { it.length() > 0 }
+            } catch (e: JSONException) {
+                null
+            }
+        }
+
+        @JvmStatic
+        fun format(uri: String, code: String): String {
+            val response = formatting(uri, code) ?: return code
+            val lines = mutableListOf(0)
+            var offset = 0
+            while (true) {
+                offset = code.indexOf('\n', offset) + 1
+                if (offset == 0) break
+                lines.add(offset)
+            }
+
+            val builder = StringBuilder()
+            var index = 0
+            try {
+                for (i in 0 until response.length()) {
+                    val item = response.getJSONObject(i)
+                    val range = item.getJSONObject("range")
+                    val start = range.getJSONObject("start")
+                    val end = range.getJSONObject("end")
+
+                    val startOffset = lines[start.getInt("line")] + start.getInt("character")
+                    val endOffset = lines[end.getInt("line")] + end.getInt("character")
+
+                    if (index < startOffset) builder.append(code.substring(index, startOffset))
+                    builder.append(item.getString("newText"))
+                    index = endOffset
+                }
+                if (index < code.length) builder.append(code.substring(index))
+            } catch (e: JSONException) {
+                return code
+            }
+            return builder.toString()
+        }
+
+        @JvmStatic
+        fun update(uri: String, code: String): Boolean {
+            if (lsp == null || lsp!!.isInterrupted || !lsp!!.isAlive) return true
+            val item = lsp!!.files[uri]
+            try {
+                if (item == null) {
+                    val versionedFile = VersionedFile(0, code)
+                    lsp!!.files[uri] = versionedFile
+                    lsp!!.notification(
+                        "textDocument/didOpen",
+                        JSONObject().apply {
+                            put("textDocument", JSONObject().apply {
+                                put("uri", uri)
+                                put("version", 0)
+                                put("languageId", uri.substringAfterLast('.'))
+                                put("text", code)
+                            })
+                        }
+                    ).join()
+                    lsp!!.symbol = null
+                } else if (item.text != code) {
+                    val a = item.text.toCharArray()
+                    val b = code.toCharArray()
+                    val offset = a.zip(b).indexOfFirst { it.first != it.second }
+                    val aLen = a.size
+                    val bLen = b.size
+                    val commonSuffix = a.reversed().zip(b.reversed()).takeWhile { it.first == it.second }.count()
+                    val start = getEndPosition(0, 0, a.copyOf(offset))
+                    val end = getEndPosition(start.getInt("line"), start.getInt("character"), a.copyOfRange(offset, aLen - commonSuffix))
+                    item.text = code
+                    item.version++
+                    val edit = JSONObject().apply {
+                        put("range", JSONObject().apply {
+                            put("start", start)
+                            put("end", end)
+                        })
+                        put("text", code.substring(offset, bLen - commonSuffix))
+                    }
+                    lsp!!.notification(
+                        "textDocument/didChange",
+                        JSONObject().apply {
+                            put("textDocument", JSONObject().apply {
+                                put("uri", uri)
+                                put("version", item.version)
+                            })
+                            put("contentChanges", JSONArray().put(edit))
+                        }
+                    ).join()
+                    lsp!!.symbol = null
+                }
+            } catch (e: JSONException) {
+                return true
+            }
+            return false
+        }
+
+        private fun getEndPosition(line: Int, character: Int, text: CharArray): JSONObject {
+            var currentLine = line
+            var currentCharacter = character
+            for (ch in text) {
+                if (ch == '\n') {
+                    currentLine++
+                    currentCharacter = 0
+                } else {
+                    currentCharacter++
+                }
+            }
+            return JSONObject().apply {
+                put("line", currentLine)
+                put("character", currentCharacter)
+            }
+        }
+
+
+
+        fun completion(line: Int, character: Int, start: Int, uri: String, code: CharSequence): List<String> {
+            return code(line, character, start, uri, code).thenApply { items ->
+                val result = mutableListOf<String>()
+                for (i in 0 until items.length()) {
+                    val item = items.getJSONObject(i)
+                    result.add(item.getString("filterText"))
+                }
+                result
+            }.join()
+        }
+
+        fun shutdown() {
+            val obj = lsp ?: return
+            lsp = null
+            obj.request("shutdown", JSONObject()).thenRun {
+                obj.notification("exit", JSONObject())
+            }.join()
+        }
+
+        private fun fatch(input: InputStream, output: (JSONObject) -> Unit, id: CompletableFuture<String>) {
+            val buffer = ByteArray(8)
+            var length = 0
+            var index = 0
+            var contentLength = 0
+            var isBody = false
+
+            while (true) {
+                val bytesRead = input.read(buffer, length, buffer.size - length)
+                if (bytesRead == -1) break
+                length += bytesRead
+
+                while (index < length) {
+                    if (isBody) {
+                        if (length < contentLength) break
+                        val jsonString = String(buffer, 0, contentLength)
+                        length -= contentLength
+                        if (length > 0) {
+                            System.arraycopy(buffer, contentLength, buffer, 0, length)
+                        }
+                        contentLength = 0
+                        isBody = false
+                        try {
+                            output(JSONObject(jsonString))
+                        } catch (e: JSONException) {
+                            e.printStackTrace()
+                        }
+                    } else if (buffer[index] == '\n'.code.toByte()) {
+                        val line = String(buffer, 0, index).trim()
+                        length -= index + 1
+                        if (length > 0) {
+                            System.arraycopy(buffer, index + 1, buffer, 0, length)
+                        }
+                        index = 0
+                        if (line.isEmpty()) {
+                            isBody = true
+                        } else {
+                            val parts = line.split(":", limit = 2)
+                            if (parts[0] == "Content-Length") {
+                                contentLength = parts[1].trim().toInt()
+                                if (buffer.size < contentLength) {
+                                    buffer.copyOf(contentLength)
+                                }
+                            } else if (parts[0] == "process") {
+                                id.complete(parts[1].trim())
+                            }
+                        }
+                    } else {
+                        index++
+                    }
+                }
+            }
+
+            if (!id.isDone) {
+                id.completeExceptionally(RuntimeException("Bad process"))
+            }
+        }
+
+
+
+
+
+
+    }
+
+
+    private fun createJsonRpcMessage(method: String?, params: Any?, id: Int?): JSONObject {
+        return JSONObject().apply {
+            put("jsonrpc", "2.0")
+            id?.let { put("id", it) }
+            method?.let { put("method", it) }
+            params?.let { put("params", it) }
+        }
+    }
+
+    private fun request(method: String, params: Any?): CompletableFuture<JSONObject> {
+        val id = ++ID
+        val data = createJsonRpcMessage(method, params, id)
+        val result = CompletableFuture<JSONObject>()
+        requests[id] = result
+
+        CompletableFuture.runAsync {
+            try {
+                send(data.toString())
+            } catch (e: IOException) {
+                requests.remove(id)?.completeExceptionally(e)
+            }
+        }
+        return result
+    }
+
+    private fun notification(method: String, params: Any?): CompletableFuture<Void> {
+        val data = createJsonRpcMessage(method, params, null)
+        return CompletableFuture.runAsync {
+            try {
+                send(data.toString())
+            } catch (e: IOException) {
+                throw CompletionException(e)
+            }
+        }
+    }
+
+
+    private fun response(method: String, data: JSONObject): Any {
+        // Placeholder for response logic
+        return JSONObject()
+    }
+
+
+    @Synchronized
+    @Throws(IOException::class)
+    private fun send(data: String) {
+        val bytes = (data + "\n").toByteArray()
+        outputStream.write("Content-Length: ${bytes.size}\r\n\r\n".toByteArray())
+        outputStream.write(bytes)
+        outputStream.flush()
+    }
+
+
+
+    fun code(model: Model, fileEntry:  FileEntry, language: Language, codeCompleterCallback: CodeCompleterCallback, items: JSONArray): Boolean {
+        try {
+            for (i in 0 until items.length()) {
+                val item = items.getJSONObject(i)
+                var label = item.getString("label").trim()
+                var offset = 0
+                while (!Character.isJavaIdentifierStart(label[offset])) {
+                    offset++
+                }
+                if (offset > 0) label = label.substring(offset)
+                val start = 1 + label.indexOf('(')
+                val end = label.lastIndexOf(')')
+                val filterText = item.getString("filterText")
+                val insertText = item.optString("insertText", filterText)
+                var kind = item.getInt("kind")
+
+                when (kind) {
+                    9 -> { // namespace
+                        codeCompleterCallback.put(label, null, "$filterText::", filterText, 6, false)
+                    }
+                    1 -> {
+                        codeCompleterCallback.put(filterText, null, insertText, filterText, 13, false)
+                    }
+                    15 -> { // like sizeof() include
+                        var string = item.optString("detail", "void")
+                        if (string == "void") string = null else string = " : $string"
+                        codeCompleterCallback.put(label, string, filterText, filterText, if (end < start) 12 else 0, start != end)
+                    }
+                    17 -> { // UnknownIdentifier
+                        codeCompleterCallback.put(filterText, null, insertText, filterText, 13, false)
+                    }
+                    2, 3 -> { // method or function
+                        var string = item.optString("detail", "void")
+                        if (string == "void") string = null else string = " : $string"
+                        codeCompleterCallback.put(label, string, filterText, filterText, 0, start != end)
+                    }
+                    5 -> { // field
+                        val string = " : ${item.getString("detail")}"
+                        codeCompleterCallback.put(label, string, insertText, filterText, 1, false)
+                    }
+                    6 -> { // variable
+                        val string = " : ${item.getString("detail")}"
+                        codeCompleterCallback.put(label, string, insertText, filterText, 7, false)
+                    }
+                    4, 7, 8, 18, 13 -> { // constructor, struct class, with namespace, etc.
+                        codeCompleterCallback.put(
+                            filterText,
+                            if (insertText.endsWith("::$filterText")) " - ${insertText.substring(0, insertText.length - 2 - filterText.length)}" else null,
+                            insertText,
+                            filterText,
+                            if (start > end) 1 else 0,
+                            start != end
+                        )
+                    }
+                    14 -> { // keyword
+                        codeCompleterCallback.listElementKeywordFound(filterText)
+                    }
+                    else -> {
+                        codeCompleterCallback.listElementKeywordFound("$filterText\n${item.toString(2)}")
+                    }
+                }
+            }
+        } catch (ignore: Exception) {
+            // Handle exception if needed
+        }
+        return true
+    }
+
+
+
+
+}
+
+private data class VersionedFile(var version: Int, var text: String)
+
+
+@Throws(IOException::class)
+fun Reader.transferTo1(out: Writer): Long {
+    var transferred = 0L
+    val buffer = CharArray(8192)
+    var nRead: Int
+    while (read(buffer, 0, 8192).also { nRead = it } >= 0) {
+        out.write(buffer, 0, nRead)
+        transferred += nRead
+    }
+    return transferred
+}

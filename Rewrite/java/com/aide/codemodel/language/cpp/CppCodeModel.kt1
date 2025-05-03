@@ -1,0 +1,170 @@
+package com.aide.codemodel.language.cpp
+
+import com.aide.codemodel.api.FileEntry
+import com.aide.codemodel.api.LexerHelper
+import com.aide.codemodel.api.Model
+import com.aide.codemodel.api.SyntaxTree
+import com.aide.codemodel.api.SyntaxTreeStyles
+import com.aide.codemodel.api.abstraction.CodeCompiler
+import com.aide.codemodel.api.abstraction.CodeModel
+import com.aide.codemodel.api.abstraction.Debugger
+import com.aide.codemodel.api.abstraction.Language
+import com.aide.codemodel.api.abstraction.Preprocessor
+import io.github.zeroaicy.aide.completion.CppCompletionUtils
+import java.io.Reader
+
+
+class CppCodeModel(private val model: Model): CodeModel {
+
+    private val cppLanguage/* j6 */: CppLanguage = CppLanguage(model)
+    private val lexerHelper/* DW */:  LexerHelper = LexerHelper(model.identifierSpace, model.errorTable, cppLanguage, Text(null))
+
+
+    override fun closeArchive() {}
+
+    override fun fillSyntaxTree(
+        fileEntry: FileEntry?,
+        reader: Reader?,
+        map: MutableMap<Language, SyntaxTreeStyles>?
+    ) {
+        lexerHelper.DW(fileEntry, reader, false, false, map?.get(cppLanguage))
+    }
+
+    override fun fillSyntaxTree(
+        fileEntry: FileEntry?,
+        reader: Reader?,
+        map: MutableMap<Language, SyntaxTree>?,
+        z: Boolean
+    ) {
+        if (map != null) {
+            if (map.containsKey(cppLanguage)) {
+                val syntaxTree = map[cppLanguage]
+                syntaxTree?.declareContent(syntaxTree.declareNode(0, true, IntArray(0), 0, 0, 1, 1))
+                CppCompletionUtils.analyzer(syntaxTree)
+            }
+        }
+    }
+
+    override fun getArchiveEntries(str: String?): Array<String>? {
+        return null
+    }
+
+    override fun getArchiveEntryReader(str: String?, str1: String?, str2: String?): Reader? {
+        return null
+    }
+
+    override fun getArchiveVersion(str: String?): Long {
+        return 0L
+    }
+
+    override fun getCodeCompiler(): CodeCompiler? {
+        return null
+    }
+
+    override fun getDebugger(): Debugger? {
+        return null
+    }
+
+    override fun getDefaultFilePatterns(): Array<String> {
+        return arrayOf(
+            "*.cpp",
+            "*.cc",
+            "*.c",
+            "*.h",
+            "*.hh",
+            "*.hpp",
+            "*.inl",
+            "*.gradle",
+            "*.json"
+        )
+    }
+
+    override fun getExtendFilePatterns(): Array<String> {
+        return emptyArray();
+
+    }
+
+    override fun getLanguages(): MutableList<Language> {
+        return mutableListOf(cppLanguage)
+    }
+
+    override fun getName(): String {
+        return "C++"
+    }
+
+    override fun getPreprocessor(): Preprocessor? {
+        return null
+    }
+
+    override fun isSupportArchiveFile(): Boolean {
+        return false
+    }
+
+    override fun processVersion(fileEntry: FileEntry?, language: Language?) {
+    }
+
+    override fun u7(): Boolean {
+        return true
+    }
+
+    override fun update() {
+    }
+}
+
+class Text(reader: Reader?): CppLexer(reader) {
+
+    private var sharp = false
+    private var skip = false
+    private var nLine = true
+
+    override fun v5(): Int {
+        var kind = super.v5()
+        if (kind == 0) return 0
+
+        val newLine = super.FH(super.Zo() - 1) == '\n'
+
+        when {
+            kind == 8 -> {
+                skip = false
+                if (!sharp && nLine) {
+                    sharp = true
+                } else if (!nLine) {
+                    kind = 1
+                }
+            }
+
+            sharp -> {
+                if (newLine) sharp = false
+                if (kind != 7) kind = 1
+            }
+
+            skip -> {
+                if (kind != 1) {
+                    skip = false
+                } else {
+                    if (Character.isLetter(super.FH(0))) {
+                        skip = false
+                        sharp = true
+                    }
+                    kind = 8
+                }
+            }
+
+            nLine && kind == 1 && super.FH(0) == '#' -> {
+                skip = true
+                kind = 8
+            }
+        }
+
+        nLine = (nLine && Character.isSpaceChar(super.FH(0))) || newLine
+        return kind
+    }
+
+    @Suppress("KotlinConstantConditions")
+    fun isp(i: Int): Boolean {
+        val h: Any? = null
+        return h is Text && i == 8
+    }
+
+
+}

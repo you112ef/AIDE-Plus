@@ -21,8 +21,8 @@
 [![Total downloads](https://img.shields.io/github/downloads/neu233/AIDE-Plus/total)](https://github.com/neu233/AIDE-Plus/releases)
 
 ## Build
-[![Android Studio](https://img.shields.io/badge/Android_Studio-2024.2.2-red?style=for-the-badge&logo=AndroidStudio)](https://developer.android.com/studio)
-[![Gradle](https://img.shields.io/badge/Gradle_Version-8.10.2-red?style=for-the-badge&logo=Gradle)](https://developer.android.com/studio)
+[![Android Studio](https://img.shields.io/badge/Android_Studio-2024.3.1-red?style=for-the-badge&logo=AndroidStudio)](https://developer.android.com/studio)
+[![Gradle](https://img.shields.io/badge/Gradle_Version-8.11.1-red?style=for-the-badge&logo=Gradle)](https://developer.android.com/studio)
 
 ## Implemented Features
 - [x] Build service optimization and rewrite

@@ -4,10 +4,10 @@ plugins {
 }
 
 android {
-    namespace = "io.github.zeroaicy.aide.aaptcompiler"
+    namespace = "io.github.zeroaicy.aide.test.aaptcompiler"
 
     defaultConfig {
-        applicationId = "io.github.zeroaicy.aide.aaptcompiler"
+        applicationId = "io.github.zeroaicy.aide.test.aaptcompiler"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -47,7 +47,7 @@ dependencies {
 
 
 
-    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.2")
+    coreLibraryDesugaring(libs.android.tools.desugar.jdk.libs)
 
 
     testImplementation(libs.junit)

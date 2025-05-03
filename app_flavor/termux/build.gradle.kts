@@ -109,6 +109,7 @@ android {
     lint {
         abortOnError = false
         checkReleaseBuilds = false
+
     }
 
     android.applicationVariants.all {
@@ -132,14 +133,8 @@ dependencies {
     api(project(":Submodule:Termux:terminal-emulator"))
     api(project(":Submodule:Termux:terminal-view"))
     api(project(":Submodule:Termux:termux-shared"))
+    api(project(":Submodule:NewBase"))
 
-    api(project(":Submodule:AIDE:app_rewrite"))
-    api(project(":Submodule:AIDE:appAideBase"))
-
-    api(project(":Submodule:Resource"))
-
-    // androidx&material和其他杂七杂八的框架
-    api(libs.bundles.google.androidx)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -156,14 +151,14 @@ dependencies {
 }
 
 configurations.all {
-    exclude(group = "org.jetbrains.kotlin", module = "kotlin-compiler-embeddable")
+//    exclude(group = "org.jetbrains.kotlin", module = "kotlin-compiler-embeddable")
     exclude(group = "net.java.dev.jna", module = "jna-platform")
     exclude(group = "net.java.dev.jna", module = "jna")
     exclude(group = "javax.inject", module = "javax.inject")
-    exclude(group = "org.jetbrains", module = "annotations")
-    exclude(group = "com.google.guava", module = "guava")
-    exclude(group = "com.google.guava", module = "listenablefuture")
-    exclude(group = "org.jetbrains.kotlin", module = "kotlin-compiler-embeddable")
+//    exclude(group = "org.jetbrains", module = "annotations")
+//    exclude(group = "com.google.guava", module = "guava")
+//    exclude(group = "com.google.guava", module = "listenablefuture")
+//    exclude(group = "org.jetbrains.kotlin", module = "kotlin-compiler-embeddable")
 }
 
 

@@ -1,0 +1,1772 @@
+package com.aide.engine.service
+
+import android.os.Binder
+import android.os.IBinder
+import android.os.IInterface
+import android.os.Parcel
+import com.aide.engine.EngineSolution
+import com.aide.engine.EngineSolutionProject
+import com.aide.engine.SourceEntity
+import com.aide.engine.SyntaxError
+import com.aide.uidesigner.ProxyTextView
+import com.probelytics.Probelytics
+import com.probelytics.annotation.ExceptionEnabled
+import com.probelytics.annotation.FieldMark
+import com.probelytics.annotation.MethodMark
+import com.probelytics.annotation.ParametersEnabled
+
+
+interface ICodeAnalysisEngineService : IInterface {
+    abstract class Sub : Binder(), ICodeAnalysisEngineService {
+        private class Proxy(private var WB: IBinder) : ICodeAnalysisEngineService {
+
+            override fun BT() {
+                val obtain = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    if (WB.transact(6, obtain, null, 1) || dx() == null) {
+                        return
+                    }
+                    dx()!!.BT()
+                } finally {
+                    obtain.recycle()
+                }
+            }
+
+            override fun C5(str: String?, str2: String?, i: Int) {
+
+                val obtain = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    obtain.writeString(str)
+                    obtain.writeString(str2)
+                    obtain.writeInt(i)
+                    if (WB.transact(57, obtain, null, 1) || dx() == null) {
+                        return
+                    }
+                    dx()!!.C5(str, str2, i)
+                } finally {
+                    obtain.recycle()
+                }
+            }
+
+            override fun Dt(str: String?, i: Int, i2: Int) {
+
+                val obtain = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    obtain.writeString(str)
+                    obtain.writeInt(i)
+                    obtain.writeInt(i2)
+                    if (WB.transact(45, obtain, null, 1) || dx() == null) {
+                        return
+                    }
+                    dx()!!.Dt(str, i, i2)
+                } finally {
+                    obtain.recycle()
+                }
+            }
+
+            override fun HG(str: String?, i: Int, i2: Int, i3: Int, i4: Int) {
+
+                val obtain = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    obtain.writeString(str)
+                    obtain.writeInt(i)
+                    obtain.writeInt(i2)
+                    obtain.writeInt(i3)
+                    obtain.writeInt(i4)
+                    if (WB.transact(35, obtain, null, 1) || dx() == null) {
+                        return
+                    }
+                    dx()!!.HG(str, i, i2, i3, i4)
+                } finally {
+                    obtain.recycle()
+                }
+            }
+
+            override fun IM(str: String?, i: Int) {
+
+                val obtain = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    obtain.writeString(str)
+                    obtain.writeInt(i)
+                    if (WB.transact(28, obtain, null, 1) || dx() == null) {
+                        return
+                    }
+                    dx()!!.IM(str, i)
+                } finally {
+                    obtain.recycle()
+                }
+            }
+
+            override fun Jt(str: String?) {
+
+                val obtain = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    obtain.writeString(str)
+                    if (WB.transact(56, obtain, null, 1) || dx() == null) {
+                        return
+                    }
+                    dx()!!.Jt(str)
+                } finally {
+                    obtain.recycle()
+                }
+            }
+
+            override fun Lq(str: String?, str2: String?, i: Int, i2: Int, i3: Int, i4: Int) {
+                val parcel: Parcel
+                var i5 = 5
+
+                val obtain = Parcel.obtain()
+                obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                obtain.writeString(str)
+                obtain.writeString(str2)
+                obtain.writeInt(i)
+                obtain.writeInt(i2)
+                obtain.writeInt(i3)
+                obtain.writeInt(i4)
+                if (WB.transact(48, obtain, null, 1) || dx() == null) {
+                    obtain.recycle()
+                    return
+                }
+                parcel = obtain
+                dx()!!.Lq(str, str2, i, i2, i3, i4)
+                parcel.recycle()
+
+
+            }
+
+            override fun N7(iEngineErrorListener: IEngineErrorListener?) {
+
+                val obtain = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    obtain.writeStrongBinder(iEngineErrorListener?.asBinder())
+                    if (WB.transact(20, obtain, null, 1) || dx() == null) {
+                        return
+                    }
+                    dx()!!.N7(iEngineErrorListener)
+                } finally {
+                    obtain.recycle()
+                }
+            }
+
+            override fun QD(str: String?, i: Int, str2: String?) {
+
+                val obtain = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    obtain.writeString(str)
+                    obtain.writeInt(i)
+                    obtain.writeString(str2)
+                    if (WB.transact(37, obtain, null, 1) || dx() == null) {
+                        return
+                    }
+                    dx()!!.QD(str, i, str2)
+                } finally {
+                    obtain.recycle()
+                }
+            }
+
+            override fun QW() {
+
+                val obtain = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    if (WB.transact(12, obtain, null, 1) || dx() == null) {
+                        return
+                    }
+                    dx()!!.QW()
+                } finally {
+                    obtain.recycle()
+                }
+            }
+
+            override fun RW(iHighlightingListener: IHighlightingListener?) {
+
+                val obtain = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    obtain.writeStrongBinder(iHighlightingListener?.asBinder())
+                    if (WB.transact(23, obtain, null, 1) || dx() == null) {
+                        return
+                    }
+                    dx()!!.RW(iHighlightingListener)
+                } finally {
+                    obtain.recycle()
+                }
+            }
+
+            override fun Ss(syntaxError: SyntaxError?, i: Int) {
+
+                val obtain = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    if (syntaxError != null) {
+                        obtain.writeInt(1)
+                        syntaxError.writeToParcel(obtain, 0)
+                    } else {
+                        obtain.writeInt(0)
+                    }
+                    obtain.writeInt(i)
+                    if (WB.transact(34, obtain, null, 1) || dx() == null) {
+                        return
+                    }
+                    dx()!!.Ss(syntaxError, i)
+                } finally {
+                    obtain.recycle()
+                }
+            }
+
+            override fun TE(i: Int, i2: Int, map: Map<*, *>?, map2: Map<*, *>?) {
+
+                val obtain = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    obtain.writeInt(i)
+                    obtain.writeInt(i2)
+                    obtain.writeMap(map)
+                    obtain.writeMap(map2)
+                    if (WB.transact(5, obtain, null, 1) || dx() == null) {
+                        return
+                    }
+                    dx()!!.TE(i, i2, map, map2)
+                } finally {
+                    obtain.recycle()
+                }
+            }
+
+            override fun VD() {
+
+                val obtain = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    if (WB.transact(14, obtain, null, 1) || dx() == null) {
+                        return
+                    }
+                    dx()!!.VD()
+                } finally {
+                    obtain.recycle()
+                }
+            }
+
+            override fun Vq(str: String?, i: Int, i2: Int, i3: Int, i4: Int) {
+
+                val obtain = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    obtain.writeString(str)
+                    obtain.writeInt(i)
+                    obtain.writeInt(i2)
+                    obtain.writeInt(i3)
+                    obtain.writeInt(i4)
+                    if (WB.transact(41, obtain, null, 1) || dx() == null) {
+                        return
+                    }
+                    dx()!!.Vq(str, i, i2, i3, i4)
+                } finally {
+                    obtain.recycle()
+                }
+            }
+
+            override fun W(str: String?) {
+
+                val obtain = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    obtain.writeString(str)
+                    if (WB.transact(19, obtain, null, 1) || dx() == null) {
+                        return
+                    }
+                    dx()!!.W(str)
+                } finally {
+                    obtain.recycle()
+                }
+            }
+
+            override fun WD(str: String?, i: Int, i2: Int, i3: Int): List<*>? {
+
+                val obtain = Parcel.obtain()
+                val obtain2 = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    obtain.writeString(str)
+                    obtain.writeInt(i)
+                    obtain.writeInt(i2)
+                    obtain.writeInt(i3)
+                    if (!WB.transact(32, obtain, obtain2, 0) && dx() != null) {
+                        return dx()!!.WD(str, i, i2, i3)
+                    }
+                    obtain2.readException()
+                    return obtain2.readArrayList(javaClass.classLoader)
+                } finally {
+                    obtain2.recycle()
+                    obtain.recycle()
+                }
+            }
+
+            override fun Wv(str: String?, i: Int, i2: Int) {
+
+                val obtain = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    obtain.writeString(str)
+                    obtain.writeInt(i)
+                    obtain.writeInt(i2)
+                    if (WB.transact(49, obtain, null, 1) || dx() == null) {
+                        return
+                    }
+                    dx()!!.Wv(str, i, i2)
+                } finally {
+                    obtain.recycle()
+                }
+            }
+
+            override fun XL() {
+
+                val obtain = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    if (WB.transact(13, obtain, null, 1) || dx() == null) {
+                        return
+                    }
+                    dx()!!.XL()
+                } finally {
+                    obtain.recycle()
+                }
+            }
+
+            override fun Xz() {
+                val obtain = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    if (WB.transact(10, obtain, null, 1) || dx() == null) {
+                        return
+                    }
+                    dx()!!.Xz()
+                } finally {
+                    obtain.recycle()
+                }
+            }
+
+            override fun addEngineSolutionProject(engineSolutionProject: EngineSolutionProject?) {
+
+                val obtain = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    if (engineSolutionProject != null) {
+                        obtain.writeInt(1)
+                        engineSolutionProject.writeToParcel(obtain, 0)
+                    } else {
+                        obtain.writeInt(0)
+                    }
+                    if (WB.transact(3, obtain, null, 1) || dx() == null) {
+                        return
+                    }
+                    dx()!!.addEngineSolutionProject(engineSolutionProject)
+                } finally {
+                    obtain.recycle()
+                }
+            }
+
+            override fun asBinder(): IBinder {
+                return WB
+            }
+
+            override fun be(str: String?, i: Int, i2: Int, i3: Int): List<*>? {
+
+                val obtain = Parcel.obtain()
+                val obtain2 = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    obtain.writeString(str)
+                    obtain.writeInt(i)
+                    obtain.writeInt(i2)
+                    obtain.writeInt(i3)
+                    if (!WB.transact(31, obtain, obtain2, 0) && dx() != null) {
+                        return dx()!!.be(str, i, i2, i3)
+                    }
+                    obtain2.readException()
+                    return obtain2.readArrayList(javaClass.classLoader)
+                } finally {
+                    obtain2.recycle()
+                    obtain.recycle()
+                }
+            }
+
+            override fun bp(str: String?, map: Map<*, *>?) {
+
+                val obtain = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    obtain.writeString(str)
+                    obtain.writeMap(map)
+                    if (WB.transact(47, obtain, null, 1) || dx() == null) {
+                        return
+                    }
+                    dx()!!.bp(str, map)
+                } finally {
+                    obtain.recycle()
+                }
+            }
+
+            override fun dP(str: String?, i: Int, i2: Int, i3: Int, i4: Int) {
+                val obtain = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    obtain.writeString(str)
+                    obtain.writeInt(i)
+                    obtain.writeInt(i2)
+                    obtain.writeInt(i3)
+                    obtain.writeInt(i4)
+                    if (WB.transact(42, obtain, null, 1) || dx() == null) {
+                        return
+                    }
+                    dx()!!.dP(str, i, i2, i3, i4)
+                } finally {
+                    obtain.recycle()
+                }
+            }
+
+            override fun df(iRefactoringListener: IRefactoringListener?) {
+                val obtain = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    obtain.writeStrongBinder(iRefactoringListener?.asBinder())
+                    if (WB.transact(22, obtain, null, 1) || dx() == null) {
+                        return
+                    }
+                    dx()!!.df(iRefactoringListener)
+                } finally {
+                    obtain.recycle()
+                }
+            }
+
+            override fun et() {
+
+                val obtain = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    if (WB.transact(8, obtain, null, 1) || dx() == null) {
+                        return
+                    }
+                    dx()!!.et()
+                } finally {
+                    obtain.recycle()
+                }
+            }
+
+            override fun ez() {
+
+                val obtain = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    if (WB.transact(9, obtain, null, 1) || dx() == null) {
+                        return
+                    }
+                    dx()!!.ez()
+                } finally {
+                    obtain.recycle()
+                }
+            }
+
+            override fun fm() {
+
+                val obtain = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    if (WB.transact(15, obtain, null, 1) || dx() == null) {
+                        return
+                    }
+                    dx()!!.fm()
+                } finally {
+                    obtain.recycle()
+                }
+            }
+
+            override fun hp(iBuildListener: IBuildListener?) {
+
+                val obtain = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    obtain.writeStrongBinder(iBuildListener?.asBinder())
+                    if (WB.transact(21, obtain, null, 1) || dx() == null) {
+                        return
+                    }
+                    dx()!!.hp(iBuildListener)
+                } finally {
+                    obtain.recycle()
+                }
+            }
+
+            override fun iQ(str: String?, i: Int, i2: Int) {
+
+                val obtain = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    obtain.writeString(str)
+                    obtain.writeInt(i)
+                    obtain.writeInt(i2)
+                    if (WB.transact(55, obtain, null, 1) || dx() == null) {
+                        return
+                    }
+                    dx()!!.iQ(str, i, i2)
+                } finally {
+                    obtain.recycle()
+                }
+            }
+
+            override fun jA(str: String?, iOpenFileInterface: IOpenFileInterface?) {
+
+                val obtain = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    obtain.writeString(str)
+                    obtain.writeStrongBinder(iOpenFileInterface?.asBinder())
+                    if (WB.transact(18, obtain, null, 1) || dx() == null) {
+                        return
+                    }
+                    dx()!!.jA(str, iOpenFileInterface)
+                } finally {
+                    obtain.recycle()
+                }
+            }
+
+            override fun jn(str: String?, i: Int) {
+
+                val obtain = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    obtain.writeString(str)
+                    obtain.writeInt(i)
+                    if (WB.transact(16, obtain, null, 1) || dx() == null) {
+                        return
+                    }
+                    dx()!!.jn(str, i)
+                } finally {
+                    obtain.recycle()
+                }
+            }
+
+            override fun k1(str: String?, i: Int, i2: Int, i3: Int, i4: Int) {
+
+                val obtain = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    obtain.writeString(str)
+                    obtain.writeInt(i)
+                    obtain.writeInt(i2)
+                    obtain.writeInt(i3)
+                    obtain.writeInt(i4)
+                    if (WB.transact(36, obtain, null, 1) || dx() == null) {
+                        return
+                    }
+                    dx()!!.k1(str, i, i2, i3, i4)
+                } finally {
+                    obtain.recycle()
+                }
+
+            }
+
+            override fun kw(str: String?, i: Int, i2: Int, i3: Int, i4: Int) {
+                val obtain = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    obtain.writeString(str)
+                    obtain.writeInt(i)
+                    obtain.writeInt(i2)
+                    obtain.writeInt(i3)
+                    obtain.writeInt(i4)
+                    if (WB.transact(46, obtain, null, 1) || dx() == null) {
+                        return
+                    }
+                    dx()!!.kw(str, i, i2, i3, i4)
+                } finally {
+                    obtain.recycle()
+                }
+            }
+
+            override fun ky(str: String?) {
+
+                val obtain = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    obtain.writeString(str)
+                    if (WB.transact(54, obtain, null, 1) || dx() == null) {
+                        return
+                    }
+                    dx()!!.ky(str)
+                } finally {
+                    obtain.recycle()
+                }
+            }
+
+            override fun lU(str: String?, i: Int, i2: Int) {
+                val obtain = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    obtain.writeString(str)
+                    obtain.writeInt(i)
+                    obtain.writeInt(i2)
+                    if (WB.transact(33, obtain, null, 1) || dx() == null) {
+                        return
+                    }
+                    dx()!!.lU(str, i, i2)
+                } finally {
+                    obtain.recycle()
+                }
+            }
+
+            override fun lj(str: String?, str2: String?) {
+                val obtain = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    obtain.writeString(str)
+                    obtain.writeString(str2)
+                    if (WB.transact(17, obtain, null, 1) || dx() == null) {
+                        return
+                    }
+                    dx()!!.lj(str, str2)
+                } finally {
+                    obtain.recycle()
+                }
+            }
+
+            override fun mF(str: String?, i: Int, i2: Int, i3: Int) {
+                val obtain = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    obtain.writeString(str)
+                    obtain.writeInt(i)
+                    obtain.writeInt(i2)
+                    obtain.writeInt(i3)
+                    if (WB.transact(44, obtain, null, 1) || dx() == null) {
+                        return
+                    }
+                    dx()!!.mF(str, i, i2, i3)
+                } finally {
+                    obtain.recycle()
+                }
+            }
+
+            override fun mn(str: String?, i: Int, i2: Int, c: Char, i3: Int): List<*>? {
+
+                val obtain = Parcel.obtain()
+                val obtain2 = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    obtain.writeString(str)
+                    obtain.writeInt(i)
+                    obtain.writeInt(i2)
+                    obtain.writeInt(c.code)
+                    obtain.writeInt(i3)
+                    if (!WB.transact(30, obtain, obtain2, 0) && dx() != null) {
+                        return dx()!!.mn(str, i, i2, c, i3)
+                    }
+                    obtain2.readException()
+                    return obtain2.readArrayList(javaClass.classLoader)
+                } finally {
+                    obtain2.recycle()
+                    obtain.recycle()
+                }
+            }
+
+            override fun oK(str: String?, i: Int, i2: Int) {
+                val obtain = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    obtain.writeString(str)
+                    obtain.writeInt(i)
+                    obtain.writeInt(i2)
+                    if (WB.transact(52, obtain, null, 1) || dx() == null) {
+                        return
+                    }
+                    dx()!!.oK(str, i, i2)
+                } finally {
+                    obtain.recycle()
+                }
+            }
+
+            override fun om(str: String?, i: Int, i2: Int, sourceEntity: SourceEntity?) {
+                val obtain = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    obtain.writeString(str)
+                    obtain.writeInt(i)
+                    obtain.writeInt(i2)
+                    if (sourceEntity != null) {
+                        obtain.writeInt(1)
+                        sourceEntity.writeToParcel(obtain, 0)
+                    } else {
+                        obtain.writeInt(0)
+                    }
+                    if (WB.transact(59, obtain, null, 1) || dx() == null) {
+                        return
+                    }
+                    dx()!!.om(str, i, i2, sourceEntity)
+                } finally {
+                    obtain.recycle()
+                }
+            }
+
+            override fun pQ(sourceEntity: SourceEntity?) {
+
+                val obtain = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    if (sourceEntity != null) {
+                        obtain.writeInt(1)
+                        sourceEntity.writeToParcel(obtain, 0)
+                    } else {
+                        obtain.writeInt(0)
+                    }
+                    if (WB.transact(39, obtain, null, 1) || dx() == null) {
+                        return
+                    }
+                    dx()!!.pQ(sourceEntity)
+                } finally {
+                    obtain.recycle()
+                }
+            }
+
+            override fun s2(str: String?, i: Int, i2: Int, i3: Int): List<*>? {
+                val obtain = Parcel.obtain()
+                val obtain2 = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    obtain.writeString(str)
+                    obtain.writeInt(i)
+                    obtain.writeInt(i2)
+                    obtain.writeInt(i3)
+                    if (!WB.transact(29, obtain, obtain2, 0) && dx() != null) {
+                        return dx()!!.s2(str, i, i2, i3)
+                    }
+                    obtain2.readException()
+                    return obtain2.readArrayList(javaClass.classLoader)
+                } finally {
+                    obtain2.recycle()
+                    obtain.recycle()
+                }
+            }
+
+            override fun sI() {
+
+                val obtain = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    if (WB.transact(7, obtain, null, 1) || dx() == null) {
+                        return
+                    }
+                    dx()!!.sI()
+                } finally {
+                    obtain.recycle()
+                }
+            }
+
+            override fun setCodeCompletionListener(iCodeCompletionListener: ICodeCompletionListener?) {
+
+                val obtain = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    obtain.writeStrongBinder(iCodeCompletionListener?.asBinder())
+                    if (WB.transact(26, obtain, null, 1) || dx() == null) {
+                        return
+                    }
+                    dx()!!.setCodeCompletionListener(iCodeCompletionListener)
+                } finally {
+                    obtain.recycle()
+                }
+            }
+
+            override fun setEngineListener(iEngineListener: IEngineListener?) {
+
+                val obtain = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    obtain.writeStrongBinder(iEngineListener?.asBinder())
+                    if (WB.transact(1, obtain, null, 1) || dx() == null) {
+                        return
+                    }
+                    dx()!!.setEngineListener(iEngineListener)
+                } finally {
+                    obtain.recycle()
+                }
+            }
+
+            override fun setEngineSolution(engineSolution: EngineSolution?) {
+
+                val obtain = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    if (engineSolution != null) {
+                        obtain.writeInt(1)
+                        engineSolution.writeToParcel(obtain, 0)
+                    } else {
+                        obtain.writeInt(0)
+                    }
+                    if (WB.transact(2, obtain, null, 1) || dx() == null) {
+                        return
+                    }
+                    dx()!!.setEngineSolution(engineSolution)
+                } finally {
+                    obtain.recycle()
+                }
+            }
+
+            // com.aide.engine.service.ICodeAnalysisEngineService
+            @MethodMark(method = 244825327996794240L)
+            override fun setGotoSymbolListener(iGotoSymbolListener: IGotoSymbolListener?) {
+
+                val obtain = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    obtain.writeStrongBinder(iGotoSymbolListener?.asBinder())
+                    if (WB.transact(27, obtain, null, 1) || dx() == null) {
+                        return
+                    }
+                    dx()!!.setGotoSymbolListener(iGotoSymbolListener)
+                } finally {
+                    obtain.recycle()
+                }
+            }
+
+            // com.aide.engine.service.ICodeAnalysisEngineService
+            @MethodMark(method = -1608726732127303728L)
+            override fun setNavigationListener(iNavigationListener: INavigationListener?) {
+
+                val obtain = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    obtain.writeStrongBinder(iNavigationListener?.asBinder())
+                    if (WB.transact(25, obtain, null, 1) || dx() == null) {
+                        return
+                    }
+                    dx()!!.setNavigationListener(iNavigationListener)
+                } finally {
+                    obtain.recycle()
+                }
+
+            }
+
+            // com.aide.engine.service.ICodeAnalysisEngineService
+            @MethodMark(method = 1417905362494132508L)
+            override fun setUsageSearcherListener(iUsageSearcherListener: IUsageSearcherListener?) {
+
+                val obtain = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    obtain.writeStrongBinder(iUsageSearcherListener?.asBinder())
+                    if (WB.transact(24, obtain, null, 1) || dx() == null) {
+                        return
+                    }
+                    dx()!!.setUsageSearcherListener(iUsageSearcherListener)
+                } finally {
+                    obtain.recycle()
+                }
+
+            }
+
+            // com.aide.engine.service.ICodeAnalysisEngineService
+            @MethodMark(method = -2683976374949081544L)
+            override fun shutdown() {
+
+                val obtain = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    if (WB.transact(11, obtain, null, 1) || dx() == null) {
+                        return
+                    }
+                    dx()!!.shutdown()
+                } finally {
+                    obtain.recycle()
+                }
+
+            }
+
+            // com.aide.engine.service.ICodeAnalysisEngineService
+            @MethodMark(method = 6106877148328274225L)
+            override fun uC(str: String?, i: Int, i2: Int) {
+
+                val obtain = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    obtain.writeString(str)
+                    obtain.writeInt(i)
+                    obtain.writeInt(i2)
+                    if (WB.transact(50, obtain, null, 1) || dx() == null) {
+                        return
+                    }
+                    dx()!!.uC(str, i, i2)
+                } finally {
+                    obtain.recycle()
+                }
+            }
+
+            // com.aide.engine.service.ICodeAnalysisEngineService
+            @MethodMark(method = 5517877485416252751L)
+            override fun updateEngineSolution() {
+                val obtain = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    if (WB.transact(4, obtain, null, 1) || dx() == null) {
+                        return
+                    }
+                    dx()!!.updateEngineSolution()
+                } finally {
+                    obtain.recycle()
+                }
+            }
+
+            /* JADX WARN: Multi-variable type inference failed */ /* JADX WARN: Type inference failed for: r1v0, types: [com.aide.engine.service.ICodeAnalysisEngineService$Sub$Proxy, java.lang.Object] */ /* JADX WARN: Type inference failed for: r1v1 */
+            // com.aide.engine.service.ICodeAnalysisEngineService
+            @MethodMark(method = 198005852156487977L)
+            override fun w1(
+                str: String?,
+                i: Int,
+                i2: Int,
+                i3: Int,
+                i4: Int,
+                str2: String?,
+                str3: String?
+            ) {
+                var parcel: Parcel
+                var i5 = this
+                val obtain = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    obtain.writeString(str)
+                    obtain.writeInt(i)
+                    obtain.writeInt(i2)
+                    obtain.writeInt(i3)
+                    obtain.writeInt(i4)
+                    obtain.writeString(str2)
+                    obtain.writeString(str3)
+                    if (i5.WB.transact(43, obtain, null, 1) || dx() == null) {
+                        obtain.recycle()
+                        return
+                    }
+                    parcel = obtain
+                    try {
+                        dx()!!.w1(str, i, i2, i3, i4, str2, str3)
+                        parcel.recycle()
+                    } catch (th2: Throwable) {
+                        parcel.recycle()
+                    }
+                } catch (th3: Throwable) {
+                    parcel = obtain
+                }
+            }
+
+            override fun w2(str: String?, i: Int, i2: Int, z: Boolean) {
+                val obtain = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    obtain.writeString(str)
+                    obtain.writeInt(i)
+                    obtain.writeInt(i2)
+                    obtain.writeInt(if (z) 1 else 0)
+                    if (WB.transact(53, obtain, null, 1) || dx() == null) {
+                        return
+                    }
+                    dx()!!.w2(str, i, i2, z)
+                } finally {
+                    obtain.recycle()
+                }
+            }
+
+            // com.aide.engine.service.ICodeAnalysisEngineService
+            @MethodMark(method = -5902208624884209L)
+            override fun wT(str: String?, i: Int) {
+
+                val obtain = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    obtain.writeString(str)
+                    obtain.writeInt(i)
+                    if (WB.transact(38, obtain, null, 1) || dx() == null) {
+                        return
+                    }
+                    dx()!!.wT(str, i)
+                } finally {
+                    obtain.recycle()
+                }
+            }
+
+            // com.aide.engine.service.ICodeAnalysisEngineService
+            @MethodMark(method = -3512951385763842468L)
+            override fun wa(str: String?, str2: String?) {
+                val obtain = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    obtain.writeString(str)
+                    obtain.writeString(str2)
+                    if (WB.transact(51, obtain, null, 1) || dx() == null) {
+                        return
+                    }
+                    dx()!!.wa(str, str2)
+                } finally {
+                    obtain.recycle()
+                }
+            }
+
+            override fun yu(str: String?, i: Int, i2: Int, i3: Int, i4: Int) {
+                val obtain = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    obtain.writeString(str)
+                    obtain.writeInt(i)
+                    obtain.writeInt(i2)
+                    obtain.writeInt(i3)
+                    obtain.writeInt(i4)
+                    if (WB.transact(40, obtain, null, 1) || dx() == null) {
+                        return
+                    }
+                    dx()!!.yu(str, i, i2, i3, i4)
+                } finally {
+                    obtain.recycle()
+                }
+            }
+
+            override fun yw(str: String?, sourceEntity: SourceEntity?) {
+                val obtain = Parcel.obtain()
+                try {
+                    obtain.writeInterfaceToken("com.aide.engine.service.ICodeAnalysisEngineService")
+                    obtain.writeString(str)
+                    if (sourceEntity != null) {
+                        obtain.writeInt(1)
+                        sourceEntity.writeToParcel(obtain, 0)
+                    } else {
+                        obtain.writeInt(0)
+                    }
+                    if (WB.transact(58, obtain, null, 1) || dx() == null) {
+                        return
+                    }
+                    dx()!!.yw(str, sourceEntity)
+                } finally {
+                    obtain.recycle()
+                }
+            }
+
+            companion object {
+
+                @FieldMark(field = -1407406545762088249L)
+                var mb: ICodeAnalysisEngineService? = null
+
+            }
+        }
+
+        init {
+            attachInterface(this, "com.aide.engine.service.ICodeAnalysisEngineService")
+        }
+
+        // android.os.IInterface
+        @MethodMark(method = 2578224511117599557L)
+        override fun asBinder(): IBinder {
+            return this
+        }
+        //reply
+        // android.os.Binder
+        @MethodMark(method = 602191533156274420L)
+        override fun onTransact(i: Int, parcel: Parcel, reply: Parcel?, i2: Int): Boolean {
+            if (i == 1598968902) {
+                reply?.writeString("com.aide.engine.service.ICodeAnalysisEngineService")
+                return true
+            }
+            if (i == 60) {
+                MyWork.service(
+                    parcel, reply, "com.aide.engine.service.ICodeAnalysisEngineService",
+                    this
+                )
+                return true
+            }
+            when (i) {
+                1 -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    setEngineListener(IEngineListener.Sub.asInterface(parcel.readStrongBinder()))
+                    return true
+                }
+
+                2 -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    setEngineSolution(
+                        if (parcel.readInt() != 0) EngineSolution.CREATOR.createFromParcel(
+                            parcel
+                        ) else null
+                    )
+                    return true
+                }
+
+                3 -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    addEngineSolutionProject(
+                        if (parcel.readInt() != 0) EngineSolutionProject.CREATOR.createFromParcel(
+                            parcel
+                        ) else null
+                    )
+                    return true
+                }
+
+                4 -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    updateEngineSolution()
+                    return true
+                }
+
+                5 -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    val readInt = parcel.readInt()
+                    val readInt2 = parcel.readInt()
+                    val classLoader = javaClass.classLoader
+                    TE(
+                        readInt,
+                        readInt2,
+                        parcel.readHashMap(classLoader),
+                        parcel.readHashMap(classLoader)
+                    )
+                    return true
+                }
+
+                6 -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    BT()
+                    return true
+                }
+
+                7 -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    sI()
+                    return true
+                }
+
+                8 -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    et()
+                    return true
+                }
+
+                9 -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    ez()
+                    return true
+                }
+
+                10 -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    Xz()
+                    return true
+                }
+
+                11 -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    shutdown()
+                    return true
+                }
+
+                12 -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    QW()
+                    return true
+                }
+
+                13 -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    XL()
+                    return true
+                }
+
+                14 -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    VD()
+                    return true
+                }
+
+                15 -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    fm()
+                    return true
+                }
+
+                16 -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    jn(parcel.readString(), parcel.readInt())
+                    return true
+                }
+
+                ProxyTextView.INPUTTYPE_textUri -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    lj(parcel.readString(), parcel.readString())
+                    return true
+                }
+
+                ProxyTextView.INPUTTYPE_numberPassword -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    jA(
+                        parcel.readString(),
+                        IOpenFileInterface.Sub.asInterface(parcel.readStrongBinder())
+                    )
+                    return true
+                }
+
+                19 -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    W(parcel.readString())
+                    return true
+                }
+
+                ProxyTextView.INPUTTYPE_date -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    N7(IEngineErrorListener.Sub.asInterface(parcel.readStrongBinder()))
+                    return true
+                }
+
+                21 -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    hp(IBuildListener.Sub.asInterface(parcel.readStrongBinder()))
+                    return true
+                }
+
+                22 -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    df(IRefactoringListener.Sub.asInterface(parcel.readStrongBinder()))
+                    return true
+                }
+
+                23 -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    RW(IHighlightingListener.Sub.asInterface(parcel.readStrongBinder()))
+                    return true
+                }
+
+                24 -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    setUsageSearcherListener(IUsageSearcherListener.Sub.asInterface(parcel.readStrongBinder()))
+                    return true
+                }
+
+                25 -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    setNavigationListener(INavigationListener.Sub.asInterface(parcel.readStrongBinder()))
+                    return true
+                }
+
+                26 -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    setCodeCompletionListener(ICodeCompletionListener.Sub.asInterface(parcel.readStrongBinder()))
+                    return true
+                }
+
+                27 -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    setGotoSymbolListener(IGotoSymbolListener.Sub.asInterface(parcel.readStrongBinder()))
+                    return true
+                }
+
+                28 -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    IM(parcel.readString(), parcel.readInt())
+                    return true
+                }
+
+                29 -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    val s2: List<*>? = s2(
+                        parcel.readString(),
+                        parcel.readInt(),
+                        parcel.readInt(),
+                        parcel.readInt()
+                    )
+                    reply?.writeNoException()
+                    reply?.writeList(s2)
+                    return true
+                }
+
+                30 -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    val mn: List<*>? = mn(
+                        parcel.readString(),
+                        parcel.readInt(),
+                        parcel.readInt(),
+                        parcel.readInt().toChar(),
+                        parcel.readInt()
+                    )
+                    reply?.writeNoException()
+                    reply?.writeList(mn)
+                    return true
+                }
+
+                31 -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    val be: List<*>? = be(
+                        parcel.readString(),
+                        parcel.readInt(),
+                        parcel.readInt(),
+                        parcel.readInt()
+                    )
+                    reply?.writeNoException()
+                    reply?.writeList(be)
+                    return true
+                }
+
+                32 -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    val WD: List<*>? = WD(
+                        parcel.readString(),
+                        parcel.readInt(),
+                        parcel.readInt(),
+                        parcel.readInt()
+                    )
+                    reply?.writeNoException()
+                    reply?.writeList(WD)
+                    return true
+                }
+
+                ProxyTextView.INPUTTYPE_textEmailAddress -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    lU(parcel.readString(), parcel.readInt(), parcel.readInt())
+                    return true
+                }
+
+                34 -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    Ss(
+                        if (parcel.readInt() != 0) SyntaxError.CREATOR.createFromParcel(parcel) else null,
+                        parcel.readInt()
+                    )
+                    return true
+                }
+
+                35 -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    HG(
+                        parcel.readString(),
+                        parcel.readInt(),
+                        parcel.readInt(),
+                        parcel.readInt(),
+                        parcel.readInt()
+                    )
+                    return true
+                }
+
+                ProxyTextView.INPUTTYPE_time -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    k1(
+                        parcel.readString(),
+                        parcel.readInt(),
+                        parcel.readInt(),
+                        parcel.readInt(),
+                        parcel.readInt()
+                    )
+                    return true
+                }
+
+                37 -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    QD(parcel.readString(), parcel.readInt(), parcel.readString())
+                    return true
+                }
+
+                38 -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    wT(parcel.readString(), parcel.readInt())
+                    return true
+                }
+
+                39 -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    pQ(if (parcel.readInt() != 0) SourceEntity.CREATOR.createFromParcel(parcel) else null)
+                    return true
+                }
+
+                40 -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    yu(
+                        parcel.readString(),
+                        parcel.readInt(),
+                        parcel.readInt(),
+                        parcel.readInt(),
+                        parcel.readInt()
+                    )
+                    return true
+                }
+
+                41 -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    Vq(
+                        parcel.readString(),
+                        parcel.readInt(),
+                        parcel.readInt(),
+                        parcel.readInt(),
+                        parcel.readInt()
+                    )
+                    return true
+                }
+
+                42 -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    dP(
+                        parcel.readString(),
+                        parcel.readInt(),
+                        parcel.readInt(),
+                        parcel.readInt(),
+                        parcel.readInt()
+                    )
+                    return true
+                }
+
+                43 -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    w1(
+                        parcel.readString(),
+                        parcel.readInt(),
+                        parcel.readInt(),
+                        parcel.readInt(),
+                        parcel.readInt(),
+                        parcel.readString(),
+                        parcel.readString()
+                    )
+                    return true
+                }
+
+                44 -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    mF(
+                        parcel.readString(),
+                        parcel.readInt(),
+                        parcel.readInt(),
+                        parcel.readInt()
+                    )
+                    return true
+                }
+
+                45 -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    Dt(parcel.readString(), parcel.readInt(), parcel.readInt())
+                    return true
+                }
+
+                46 -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    kw(
+                        parcel.readString(),
+                        parcel.readInt(),
+                        parcel.readInt(),
+                        parcel.readInt(),
+                        parcel.readInt()
+                    )
+                    return true
+                }
+
+                47 -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    bp(parcel.readString(), parcel.readHashMap(javaClass.classLoader))
+                    return true
+                }
+
+                48 -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    Lq(
+                        parcel.readString(),
+                        parcel.readString(),
+                        parcel.readInt(),
+                        parcel.readInt(),
+                        parcel.readInt(),
+                        parcel.readInt()
+                    )
+                    return true
+                }
+
+                ProxyTextView.INPUTTYPE_textEmailSubject -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    Wv(parcel.readString(), parcel.readInt(), parcel.readInt())
+                    return true
+                }
+
+                50 -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    uC(parcel.readString(), parcel.readInt(), parcel.readInt())
+                    return true
+                }
+
+                51 -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    wa(parcel.readString(), parcel.readString())
+                    return true
+                }
+
+                52 -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    oK(parcel.readString(), parcel.readInt(), parcel.readInt())
+                    return true
+                }
+
+                53 -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    w2(
+                        parcel.readString(),
+                        parcel.readInt(),
+                        parcel.readInt(),
+                        parcel.readInt() != 0
+                    )
+                    return true
+                }
+
+                54 -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    ky(parcel.readString())
+                    return true
+                }
+
+                55 -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    iQ(parcel.readString(), parcel.readInt(), parcel.readInt())
+                    return true
+                }
+
+                56 -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    Jt(parcel.readString())
+                    return true
+                }
+
+                57 -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    C5(parcel.readString(), parcel.readString(), parcel.readInt())
+                    return true
+                }
+
+                58 -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    yw(
+                        parcel.readString(),
+                        if (parcel.readInt() != 0) SourceEntity.CREATOR.createFromParcel(parcel) else null
+                    )
+                    return true
+                }
+
+                59 -> {
+                    parcel.enforceInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                    om(
+                        parcel.readString(),
+                        parcel.readInt(),
+                        parcel.readInt(),
+                        if (parcel.readInt() != 0) SourceEntity.CREATOR.createFromParcel(parcel) else null
+                    )
+                    return true
+                }
+
+                else -> return super.onTransact(i, parcel, reply, i2)
+            }
+        }
+
+        companion object {
+            @ExceptionEnabled
+            private var exceptionEnabled/* synthetic */ = false
+
+            @ParametersEnabled
+            private var parametersEnabled/* synthetic */ = false
+
+            init {
+                Probelytics.onClass(Sub::class.java)
+            }
+
+            @MethodMark(method = 3219079053571305444L)
+            fun asInterface(iBinder: IBinder?): ICodeAnalysisEngineService? {
+                if (iBinder == null) {
+                    return null
+                }
+                val queryLocalInterface =
+                    iBinder.queryLocalInterface("com.aide.engine.service.ICodeAnalysisEngineService")
+                return if (queryLocalInterface == null || queryLocalInterface !is ICodeAnalysisEngineService) Proxy(
+                    iBinder
+                ) else queryLocalInterface
+            }
+
+            @MethodMark(method = -4489151205090372000L)
+            fun dx(): ICodeAnalysisEngineService? {
+                return Proxy.mb
+            }
+        }
+    }
+
+    @MethodMark(method = 424620879186700897L)
+    fun BT()
+
+    @MethodMark(method = 2005028739186982407L)
+    fun C5(str: String?, str2: String?, i: Int)
+
+    @MethodMark(method = -609671068578175844L)
+    fun Dt(str: String?, i: Int, i2: Int)
+
+    @MethodMark(method = -81757409872499979L)
+    fun HG(str: String?, i: Int, i2: Int, i3: Int, i4: Int)
+
+    @MethodMark(method = -5043158941829864700L)
+    fun IM(str: String?, i: Int)
+
+    @MethodMark(method = -464115597426103428L)
+    fun Jt(str: String?)
+
+    @MethodMark(method = -266265219096285699L)
+    fun Lq(str: String?, str2: String?, i: Int, i2: Int, i3: Int, i4: Int)
+
+    @MethodMark(method = -542661058232629704L)
+    fun N7(iEngineErrorListener: IEngineErrorListener?)
+
+    @MethodMark(method = -4572493844848807240L)
+    fun QD(str: String?, i: Int, str2: String?)
+
+    @MethodMark(method = 1602954360148613784L)
+    fun QW()
+
+    @MethodMark(method = 2567550585702051231L)
+    fun RW(iHighlightingListener: IHighlightingListener?)
+
+    @MethodMark(method = 905397250150879713L)
+    fun Ss(syntaxError: SyntaxError?, i: Int)
+
+    @MethodMark(method = 1695850872454158143L)
+    fun TE(i: Int, i2: Int, map: Map<*, *>?, map2: Map<*, *>?)
+
+    @MethodMark(method = 792085046932623873L)
+    fun VD()
+
+    @MethodMark(method = 224096752563356491L)
+    fun Vq(str: String?, i: Int, i2: Int, i3: Int, i4: Int)
+
+    @MethodMark(method = -3083630209135697403L)
+    fun W(str: String?)
+
+    @MethodMark(method = 2255015596384374336L)
+    fun WD(str: String?, i: Int, i2: Int, i3: Int): List<*>?
+
+    @MethodMark(method = 3408646160664797855L)
+    fun Wv(str: String?, i: Int, i2: Int)
+
+    @MethodMark(method = 1673563720434519168L)
+    fun XL()
+
+    @MethodMark(method = 2139071640938651328L)
+    fun Xz()
+
+    @MethodMark(method = -1911821007440273185L)
+    fun addEngineSolutionProject(engineSolutionProject: EngineSolutionProject?)
+
+    @MethodMark(method = -3242651384819459657L)
+    fun be(str: String?, i: Int, i2: Int, i3: Int): List<*>?
+
+    @MethodMark(method = 7804569818836311617L)
+    fun bp(str: String?, map: Map<*, *>?)
+
+    @MethodMark(method = 425368655873958753L)
+    fun dP(str: String?, i: Int, i2: Int, i3: Int, i4: Int)
+
+    @MethodMark(method = -73928411223779308L)
+    fun df(iRefactoringListener: IRefactoringListener?)
+
+    @MethodMark(method = 1352613227748625495L)
+    fun et()
+
+    @MethodMark(method = -4312689945911029815L)
+    fun ez()
+
+    @MethodMark(method = 19286870835983920L)
+    fun fm()
+
+    @MethodMark(method = -267768082282061271L)
+    fun hp(iBuildListener: IBuildListener?)
+
+    @MethodMark(method = -2324829411034782577L)
+    fun iQ(str: String?, i: Int, i2: Int)
+
+    @MethodMark(method = 201446561178721325L)
+    fun jA(str: String?, iOpenFileInterface: IOpenFileInterface?)
+
+    @MethodMark(method = 5897820504068219780L)
+    fun jn(str: String?, i: Int)
+
+    @MethodMark(method = -1223541098953701060L)
+    fun k1(str: String?, i: Int, i2: Int, i3: Int, i4: Int)
+
+    @MethodMark(method = 5971975284626992872L)
+    fun kw(str: String?, i: Int, i2: Int, i3: Int, i4: Int)
+
+    @MethodMark(method = -6931295592626616944L)
+    fun ky(str: String?)
+
+    @MethodMark(method = 487785455261365504L)
+    fun lU(str: String?, i: Int, i2: Int)
+
+    @MethodMark(method = -3476954352951544023L)
+    fun lj(str: String?, str2: String?)
+
+    @MethodMark(method = 3882200792910596240L)
+    fun mF(str: String?, i: Int, i2: Int, i3: Int)
+
+    @MethodMark(method = 68610014848804275L)
+    fun mn(str: String?, i: Int, i2: Int, c: Char, i3: Int): List<*>?
+
+    @MethodMark(method = 5345580472212822765L)
+    fun oK(str: String?, i: Int, i2: Int)
+
+    @MethodMark(method = -1983247133967950185L)
+    fun om(str: String?, i: Int, i2: Int, sourceEntity: SourceEntity?)
+
+    @MethodMark(method = -1498965424147956471L)
+    fun pQ(sourceEntity: SourceEntity?)
+
+    @MethodMark(method = -1467567229679165153L)
+    fun s2(str: String?, i: Int, i2: Int, i3: Int): List<*>?
+
+    @MethodMark(method = 2115645289088575660L)
+    fun sI()
+
+    @MethodMark(method = 760529456971607700L)
+    fun setCodeCompletionListener(iCodeCompletionListener: ICodeCompletionListener?)
+
+    @MethodMark(method = 1091537961689258841L)
+    fun setEngineListener(iEngineListener: IEngineListener?)
+
+    @MethodMark(method = 3845467924422427611L)
+    fun setEngineSolution(engineSolution: EngineSolution?)
+
+    @MethodMark(method = -295089435123539463L)
+    fun setGotoSymbolListener(iGotoSymbolListener: IGotoSymbolListener?)
+
+    @MethodMark(method = -1427054780114765335L)
+    fun setNavigationListener(iNavigationListener: INavigationListener?)
+
+    @MethodMark(method = 2018960176812099597L)
+    fun setUsageSearcherListener(iUsageSearcherListener: IUsageSearcherListener?)
+
+    @MethodMark(method = 3236939732395669381L)
+    fun shutdown()
+
+    @MethodMark(method = 3274093199964932948L)
+    fun uC(str: String?, i: Int, i2: Int)
+
+    @MethodMark(method = -1461080970831705072L)
+    fun updateEngineSolution()
+
+    @MethodMark(method = -2105850509230668508L)
+    fun w1(str: String?, i: Int, i2: Int, i3: Int, i4: Int, str2: String?, str3: String?)
+
+    @MethodMark(method = 97110160458847488L)
+    fun w2(str: String?, i: Int, i2: Int, z: Boolean)
+
+    @MethodMark(method = 4415260582352042952L)
+    fun wT(str: String?, i: Int)
+
+    @MethodMark(method = 6404544106878368493L)
+    fun wa(str: String?, str2: String?)
+
+    @MethodMark(method = -5030934034244158131L)
+    fun yu(str: String?, i: Int, i2: Int, i3: Int, i4: Int)
+
+    @MethodMark(method = 925503109364798208L)
+    fun yw(str: String?, sourceEntity: SourceEntity?)
+
+}

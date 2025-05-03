@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+        android:sharedUserId="io.github.zeroaicy"
+        android:installLocation="auto">
+
+
+    <application>
+        <activity
+                android:theme="@style/AppTheme"
+                android:name="io.github.zeroaicy.aide.activity.ManifestEditorActivity"
+                android:exported="false" />
+
+        <activity
+                android:theme="@style/AppTheme"
+                android:name="io.github.zeroaicy.aide.activity.JsonEditorActivity"
+                android:exported="false" />
+
+        <activity
+            android:theme="@style/AppTheme"
+            android:name="io.github.zeroaicy.aide.activity.AndroidXmlEditorActivity"
+            android:exported="false" />
+    </application>
+
+</manifest>

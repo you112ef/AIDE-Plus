@@ -9,6 +9,9 @@ plugins {
     alias(libs.plugins.kotlinParcelize) apply false
     alias(libs.plugins.googleDagge) apply false
     alias(libs.plugins.kotlinComposeCompiler) apply false
+
+
+//    id("com.gradleup.shadow") version "9.0.0-beta8"
     id("build-logic.project")
 }
 

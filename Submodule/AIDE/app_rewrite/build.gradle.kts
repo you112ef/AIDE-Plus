@@ -60,7 +60,7 @@ dependencies {
     api(project(":Submodule:Eclipse:JavaFormatter"))
 
     api(project(":Submodule:Kotlin:Compiler"))
-    api(project(":Submodule:Kotlin:Formatter"))
+
 
     api(project(":Submodule:Github:Richpath"))
     api(project(":Submodule:Github:TreeView"))
@@ -84,6 +84,10 @@ dependencies {
     implementation(libs.io.github.liangjingkanji.recyclerBRV)
     // sora-editor代码编辑框
     implementation(libs.io.github.rosemoe.sora.editor.editor)
+
+
+    // 新版本的文件浏览用到了
+    api(libs.bundles.libsu)
 
 
     // appAideBase 项目的依赖
@@ -124,6 +128,10 @@ dependencies {
     // apk签名
     api(libs.com.android.tools.build.apksig)
 
+    // https://mvnrepository.com/artifact/com.google.prefab/api
+    implementation(libs.com.google.prefab.api)
+    //出现错误，使用本地jar
+    api(files("libs/prefab-plugin-2.1.0.jar"))
 
     val aideLibraryDir = project.rootDir.resolve("AIDELibrary")
 
