@@ -407,9 +407,6 @@ public class FileBrowser extends LinearLayoutCompat implements
                 }
             });
         }
-
-
-
         lastFolder = j6;
 
     }
