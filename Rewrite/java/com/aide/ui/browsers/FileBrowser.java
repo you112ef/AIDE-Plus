@@ -30,26 +30,34 @@ import com.aide.ui.rewrite.R;
 import com.aide.ui.services.FileBrowserService;
 import com.aide.ui.util.FileSystem;
 import com.aide.ui.views.CustomKeysListView;
+import com.blankj.utilcode.util.LogUtils;
+import com.github.promeg.pinyinhelper.Pinyin;
+import com.topjohnwu.superuser.io.SuFile;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import io.github.zeroaicy.aide.ui.view.BreadcrumbItem;
 import io.github.zeroaicy.aide.ui.view.BreadcrumbView;
+import io.github.zeroaicy.aide.utils.FilesSystem;
+import io.github.zeroaicy.aide.utils.FilesSystemKt;
 import jaxp.sun.org.apache.xalan.internal.templates.Constants;
 
 public class FileBrowser extends LinearLayoutCompat implements
         FileBrowserService.a,
-        com.aide.ui.browsers.a {
+        a {
 
 
-    protected View fY;
     private final QuickActionMenu WB;
     private final KeyStrokeDetector.KeyStrokeHandler jw;
-
     private final QuickActionMenu mb;
-
+    protected View fY;
     private Adapter qp;
+    private String lastFolder = null;
 
 
     public FileBrowser(Context context) {
@@ -77,6 +85,40 @@ public class FileBrowser extends LinearLayoutCompat implements
         }
         return true;
     }
+
+    private static boolean isSpecialDir(File file) {
+        String name = file.getName();
+        File parent = file.getParentFile();
+
+        if ("bin".equals(name)) {
+            if (parent != null) {
+                if (new File(parent, ".classpath").exists() || new File(parent, "AndroidManifest.xml").exists()) {
+                    return true;
+                }
+                File grandParent = parent.getParentFile();
+                if (grandParent != null && new File(grandParent, "build.gradle").exists()) {
+                    return true;
+                }
+                if (grandParent != null && new File(grandParent, "build.gradle.kts").exists()) {
+                    return true;
+                }
+            }
+        }
+
+        if ("obj".equals(name) && parent != null && new File(parent, "AndroidManifest.xml").exists()) {
+            return true;
+        }
+
+        if ("build".equals(name) && parent != null && new File(parent, "build.gradle").exists()) {
+            return true;
+        }
+        if ("build".equals(name) && parent != null && new File(parent, "build.gradle.kts").exists()) {
+            return true;
+        }
+
+        return false;
+    }
+
 
     @SuppressLint("InflateParams")
     private void EQ() {
@@ -167,7 +209,6 @@ public class FileBrowser extends LinearLayoutCompat implements
         return (MainActivity) getContext();
     }
 
-
     public void J8(String str) {
 
         if (ServiceContainer.getProjectService().isInCurrentProjectDirectory(str)) {
@@ -219,7 +260,7 @@ public class FileBrowser extends LinearLayoutCompat implements
         // 新增面包屑列表
         BreadcrumbView breadcrumbView = listView.findViewById(R.id.browserHeaderBreadcrumb);
 
-        breadcrumbView.setPath(createList(j6), (item,  index)->{
+        breadcrumbView.setPath(createList(j6), (item, index) -> {
 
             J8(item.getFullPath());
             //ToastUtils.showLong("点击了："+item.getName()+"路径"+item.getFullPath());
@@ -245,43 +286,135 @@ public class FileBrowser extends LinearLayoutCompat implements
         }
         try {
 
-            boolean isRoot = false;
-            boolean isShizuku = false;
-//            boolean isDefault = true; // 上面两个用不了就默认这个了
-//            boolean isSAF = true; // 太垃圾了，不想用
+
+            SuFile suFile = new SuFile(FilesSystemKt.fixApi30(j6,true));
+            if (suFile.isDirectory()) {
+                File[] files = suFile.listFiles();
+
+                List<String> result = FilesSystem.INSTANCE.processPaths(j6);
+
+                List<File> newResult = new ArrayList<>();
+
+                for (String string : result) {
+                    System.out.println(string);
+                    newResult.add(new SuFile(string));
+                }
 
 
-
-            if (isRoot){
-
-
-
-            } else if (isShizuku) {
+                if (files != null) {
+                    newResult.addAll(Arrays.asList(files));
+                }
 
 
+                List<File> folderList = new ArrayList<>();
+                List<File> specialFolderList = new ArrayList<>();
+                List<File> hideFolderList = new ArrayList<>();
+                List<File> fileList = new ArrayList<>();
+                List<File> hideFileList = new ArrayList<>();
 
-            } else {
 
-            }
+                for (File file : newResult) {
+
+                    if (file.isDirectory()) {
+                        if (file.isHidden()) {
+                            hideFolderList.add(file);
+                        } else {
+                            if (isSpecialDir(file)) {
+                                specialFolderList.add(file);
+                            } else {
+                                folderList.add(file);
+                            }
+                        }
+                    } else {
+                        if (file.isHidden()) {
+                            hideFileList.add(file);
+                        } else {
+                            fileList.add(file);
+                        }
+                    }
+                }
 
 
-            List<String> listFiles = FileSystem.listFiles(j6);
-            sortList(listFiles);
-            for (String str : listFiles) {
-                arrayList.add(new Data(this, str, FileSystem.getName(str), FileSystem.KD(str)));
+                Collections.sort(folderList, new FileComparator(folderList, 1));
+                Collections.sort(specialFolderList, new FileComparator(specialFolderList, 2));
+                Collections.sort(hideFolderList, new FileComparator(hideFolderList, 3));
+                Collections.sort(fileList, new FileComparator(fileList, 4));
+                Collections.sort(hideFileList, new FileComparator(hideFileList, 5));
+
+                List<File> newList = folderList;
+
+                // newList.addAll(folderList);
+                newList.addAll(specialFolderList);
+                newList.addAll(hideFolderList);
+                newList.addAll(fileList);
+                newList.addAll(hideFileList);
+
+
+                for (File file1 : newList) {
+                    arrayList.add(new Data(this, file1.getAbsolutePath(), file1.getName(), FileSystem.KD(file1.getAbsolutePath())));
+                }
+            }else{
+                List<String> listFiles = FileSystem.listFiles(j6);
+                Collections.sort(listFiles, new Comparator<String>() {
+                    @Override
+                    public int compare(String str, String str2) {
+                        boolean notPreProcessorFile = FileSystem.notPreProcessorFile(str);
+                        boolean notPreProcessorFile2 = FileSystem.notPreProcessorFile(str2);
+                        String lowerCase = FileSystem.getName(str).toLowerCase();
+                        String lowerCase2 = FileSystem.getName(str2).toLowerCase();
+                        if (notPreProcessorFile && !notPreProcessorFile2) {
+                            return -1;
+                        }
+                        if (!notPreProcessorFile && notPreProcessorFile2) {
+                            return 1;
+                        }
+                        if (!notPreProcessorFile || !notPreProcessorFile2) {
+                            int lastIndexOf = lowerCase.lastIndexOf(".");
+                            String substring = lastIndexOf > 0 ? lowerCase.substring(lastIndexOf) : "";
+                            int lastIndexOf2 = lowerCase2.lastIndexOf(".");
+                            int compareTo = substring.compareTo(lastIndexOf2 > 0 ? lowerCase2.substring(lastIndexOf2) : "");
+                            return compareTo != 0 ? compareTo : lowerCase.compareTo(lowerCase2);
+                        }
+                        boolean we = FileBrowser.we(lowerCase);
+                        boolean we2 = FileBrowser.we(lowerCase2);
+                        if (we && !we2) {
+                            return 1;
+                        }
+                        if (we || !we2) {
+                            return lowerCase.compareTo(lowerCase2);
+                        }
+                        return -1;
+
+                    }
+                });
+                for (String str : listFiles) {
+                    arrayList.add(new Data(this, str, FileSystem.getName(str), FileSystem.KD(str)));
+                }
+
             }
         } catch (Exception e2) {
             AppLog.e(e2);
         }
         this.qp.DW(arrayList);
+
+        if (lastFolder!=null) {
+            arrayList.forEach(it -> {
+                if (it.FH!=null) {
+                    if (it.FH.equals(lastFolder)) {
+                        int position = arrayList.indexOf(it);
+                        getListView().smoothScrollToPosition(position+3);
+                    }
+                }
+            });
+        }
+
+
+
+        lastFolder = j6;
+
     }
 
-
-    public void sortList(List<String> listFiles) {
-
-    }
-
-    public List<BreadcrumbItem> createList(String fullPath){
+    public List<BreadcrumbItem> createList(String fullPath) {
         List<BreadcrumbItem> items = new ArrayList<>();
         if (fullPath == null || fullPath.isEmpty()) return items;
 
@@ -319,7 +452,6 @@ public class FileBrowser extends LinearLayoutCompat implements
 
     @Override
     public boolean onKeyDown(int i, KeyEvent keyEvent) {
-
         if (ServiceContainer.getMainActivity().getKeyStrokeDetector().onKeyDown(i, keyEvent, this.jw)) {
             return true;
         }
@@ -378,9 +510,9 @@ public class FileBrowser extends LinearLayoutCompat implements
                 return;
             }
             if (DW()) {
-                this.v5 = R.drawable.folder_open;
+                this.v5 = R.drawable.folder_open; // 上一级
             } else if (FileBrowser.we(str2)) {
-                this.v5 = R.drawable.folder_hidden;
+                this.v5 = R.drawable.folder_hidden; // 隐藏文件夹
             } else {
                 this.v5 = R.drawable.folder;
             }
@@ -420,22 +552,62 @@ public class FileBrowser extends LinearLayoutCompat implements
     }
 
 
-    static class ShellFile{
+    private record FileComparator(List<File> list, int type) implements Comparator<File> {
 
-        Model model;
+        @Override
+            public int compare(File s1, File s2) {
+                try {
+                    String sa1 = getFileName(s1);
+                    String sa2 = getFileName(s2);
 
-        public ShellFile(Model model){
-            this.model = model;
+                    // 比较名称
+                    String name1 = getNameFromString(sa1);
+                    String name2 = getNameFromString(sa2);
+                    int result = name1
+                            .compareToIgnoreCase(name2);
+
+                    // 如果名称相同，则按数字排序
+                    if (result == 0) {
+                        int num1 = getIntFromString(sa1);
+                        int num2 = getIntFromString(sa2);
+                        result = Integer.compare(num1, num2);
+                    }
+
+                    return result;
+                } catch (Throwable e) {
+                    LogUtils.e(e);
+                }
+                return 0;
+            }
+
+            // 获取字符串名称
+            private String getNameFromString(String source) {
+                String replace = source.replaceAll("\\d+", "");
+                if (replace.isEmpty()) return source;
+                //if (Pinyin.isChinese(at0))
+                return Pinyin.toPinyin(replace, " ");
+                //else return String.valueOf(at0);
+            }
+
+            // 获取字符串中的数字
+            private int getIntFromString(String s) {
+                String num = s.replaceAll("[^\\d]", "");
+                if (num.isEmpty()) {
+                    return -1;
+                } else {
+                    return Integer.parseInt(num);
+                }
+            }
+
+            private String getFileName(File file) {
+                String name = file.getName();
+                int index = name.lastIndexOf("/");
+                if (index == -1) return name;
+                name = name.substring(index + 1);
+                return name;
+            }
 
         }
 
 
-
-        enum Model{
-            ROOT,
-            SHIZUKU,
-            DEFAULT
-        }
-
-    }
 }

@@ -132,7 +132,7 @@ android {
 
                 val assetsSrcDir = rootProjectDir.resolve("${currentProjectName}/src/main/assets")
                 if (assetsSrcDir.exists()) {
-                    assets.setSrcDirs(listOf(assetsSrcDir))
+                    assets.setSrcDirs(listOf(assetsSrcDir,rootDir.resolve("Rewrite/assets")))
                 }
 
                 val resourcesSrcDir =

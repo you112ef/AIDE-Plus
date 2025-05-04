@@ -70,6 +70,8 @@ dependencies {
     // 新增内容
     api(libs.io.github.itsaky.nb.javac.android)
 
+    api(libs.bundles.tinypinyin)
+
     //多语言工具
     implementation(libs.io.github.getActivity.multiLanguages)
     // okhttp

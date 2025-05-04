@@ -104,6 +104,8 @@
 - [kotlinc-android](https://github.com/Cosmic-Ide/kotlinc-android) 编译Kotlin
 - [LSPosed](https://github.com/LSPosed/LSPosed) 目前引入了模糊弹窗代码
 - [aosp-android-jar](https://github.com/Reginer/aosp-android-jar) aosp隐藏api的使用
+- [TinyPinyin](https://github.com/promeG/TinyPinyin) 拼音
+- [libsu](https://github.com/topjohnwu/libsu) libsu
 ### 资源相关
 - [Github](https://github.com/)
 - [Icon8](https://igoutu.cn/)
