@@ -17,4 +17,10 @@ jobs:
         git clone --recurse-submodules https://github.com/cassyjay645/AIDE-Plus
         
     - name: lsd
-      run: ls coope
+      run: ls -R coope
+      
+    - name: newreo
+      run: git clone https://github.com/cassyjay645/aidepor
+      
+    - name: s1
+      run: ls -R
