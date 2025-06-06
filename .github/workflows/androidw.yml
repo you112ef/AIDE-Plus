@@ -10,7 +10,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: set up JDK 11
-      run: git clone https://github.com/AndroidIDE-CN/AIDE-Plus
+    - name: steep
+      run: |
+        mkdir coope
+        cd coope
+        git clone --recurse-submodules https://github.com/cassyjay645/AIDE-Plus
+        
     - name: lsd
-      run: ls 
+      run: ls coope
