@@ -11,6 +11,6 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: set up JDK 11
-      run: git clone https://github.com/AndroidIDE-CN/AIDE-Plus/tree/6102cf28dcb057d1e984184010d22954f287ec6b
+      run: git clone https://github.com/AndroidIDE-CN/AIDE-Plus
     - name: lsd
       run: ls 
