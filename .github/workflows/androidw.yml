@@ -15,12 +15,18 @@ jobs:
         mkdir coope
         cd coope
         git clone --recurse-submodules https://github.com/cassyjay645/AIDE-Plus
+        git submodule
+        git submodule init
+        git submodule update
         
     - name: lsd
       run: ls -R coope
       
     - name: newreo
-      run: git clone https://github.com/cassyjay645/aidepor
+      run: | 
+        git clone https://github.com/cassyjay645/aidepor
+        cp -r AIDE-Plus/* aidepor/
+        
       
     - name: s1
-      run: ls -R
+      run: ls -R aidepor
